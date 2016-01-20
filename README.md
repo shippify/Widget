@@ -4,7 +4,7 @@ Shippify javascript widget that implement the api for last mile delivery
 
 ### CSS Avaliable to customize widget style 
 
-```style
+```css
 /*This class define the main container of the widget*/
 .widget_card {
     width: 100%;
