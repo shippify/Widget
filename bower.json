@@ -1,0 +1,21 @@
+{
+  "name": "shippify-widget",
+  "authors": [
+    "AJ Ortiz <alvaro@shippify.co>"
+  ],
+  "description": "",
+  "main": "index.js",
+  "moduleType": [],
+  "keywords": [
+    "shippify"
+  ],
+  "license": "MIT",
+  "homepage": "https://shippify.co",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
