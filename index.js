@@ -16,16 +16,6 @@ var Widget = function () {
 
 		includeJQueryIfNeeded(function () {
 			var url = 'https://services.shippify.co';
-			// if (typeof json.env === 'undefined' || json.env === 'production') {
-			// 	url = 'https://services.shippify.co';
-			// } else if (json.env === 'staging') {
-			// 	url = 'http://staging.shippify.co';
-			// } else if (json.env === 'development') {
-			// 	url = 'http://localhost:8021';
-			// } else {
-			// 	url = json.env;
-			// }
-
 			$.ajax({
 				method: 'GET',
 				url: url + '/shippify/widget',
