@@ -2,14 +2,22 @@
 
 Shippify javascript widget that implement the api for last mile delivery
 
-### CSS Avaliable to customize widget style 
+### Install
+
+## Bower
+
+```shell
+bower install shippify-widget
+```
+
+### CSS Avaliable to customize widget style
 
 ```css
 /*This class define the main container of the widget*/
 .widget_card {
     width: 100%;
     background: red !important; //Edit Background Color
-    color: black !important; //Edit Text Color 
+    color: black !important; //Edit Text Color
 }
 
 /*This class define the map preview container of the widget*/
@@ -22,7 +30,7 @@ Shippify javascript widget that implement the api for last mile delivery
 .widget_price_container_test {
     height: 35px;
     width: 100%;
-    background: #f2f2f2; // Edit Price Container Background Color 
+    background: #f2f2f2; // Edit Price Container Background Color
     padding: 4px;
     text-align: center;
     margin-bottom: 10px;
