@@ -16,7 +16,7 @@ bower install shippify-widget
 /*This class define the main container of the widget*/
 .widget_card {
     width: 100%;
-    background: red !important; //Edit Background Color
+    background: white !important; //Edit Background Color
     color: black !important; //Edit Text Color
 }
 
