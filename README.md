@@ -1,6 +1,8 @@
 # Widget
 A Shippify UI Widget which implements and consumes the Last Mile Delivery API.
 
+![Shippify Widget](images/widget.png)
+
 ## Installation
 ### Bower
 [Bower](bower.io) is a dependency package manager for Web projects. You can install it with the following command:
