@@ -27,7 +27,7 @@ bower install shippify-widget
 }
 
 /*This class define the price container of the widget*/
-.widget_price_container_test {
+.widget_price_label_container {
     height: 35px;
     width: 100%;
     background: #f2f2f2; // Edit Price Container Background Color
@@ -42,6 +42,4 @@ bower install shippify-widget
     font-weight: 900;
     color: #858585; //Edit Price Text Color
 }
-
-
 ```
