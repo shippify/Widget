@@ -21,9 +21,14 @@ new Widget().init(/*configuration*/, /*DOM Element*/, /*handler*/ function (/*er
 ```
 
 ### Configuration
+Shippify uses API keys to allow access to the API. You can get an API key pair signing in your account at [admin portal](https://services.shippify.co/settings)
+
+The next parameters are required for the widget
+
 - api_id: Company's API id.
 - api_token: Company's API token.
 - task: Default task object fields.
+
 
 ### Listeners
 Must be located inside the handler function.
@@ -90,7 +95,10 @@ $(Widget).on(/*event_name*/, function(/*event*/, /*payload*/) {
 }
 ```
 
-### Javscript
+
+### Javascript
+Remember to replace the API keys for your company!
+
 ```javascript
 var api_id = "i7oyoo6kvllf035pm7r885mi"; // Insert your API id
 var api_token = "e71c001ddf31475500e3fad9fca5fff4"; // Insert your API token
