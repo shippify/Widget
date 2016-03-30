@@ -49,7 +49,7 @@ $(Widget).on(/*event_name*/, function(/*event*/, /*payload*/) {
   <head>
     <style type="text/css">
         html, body { height: 100%; margin: 0; padding: 0; }
-        #canvas {
+        #canvas_widget {
             width: 300px;
         }
     </style>
@@ -57,7 +57,7 @@ $(Widget).on(/*event_name*/, function(/*event*/, /*payload*/) {
   </head>
   <body>
     <script type="text/javascript" src="./.."></script>
-    <div id="canvas"></div>
+    <div id="canvas_widget"></div>
     <script type="text/javascript" src="."></script>
   </body>
 </html>
@@ -103,6 +103,7 @@ Remember to replace the API keys for your company!
 
 ```javascript
 <script type="text/javascript">
+// APIs
 var api_id = "i7oyoo6kvllf035pm7r885mi"; // Insert your API id
 var api_token = "e71c001ddf31475500e3fad9fca5fff4"; // Insert your API token
 
@@ -129,16 +130,19 @@ var task = {
     address: "Carbono, 456, y la Rua"
   } // Default delivery location information
 };
-new Widget().init({api_id: api_id, api_token: api_token, task: task},
-  document.getElementById("canvas"), function (err, Widget) {
-   if(err)
-     return console.log(err);
-   $(Widget).on("fare", function(event, price){
-     console.log(price);
-   });
-   $(Widget).on("task", function(event, task){
-     console.log(task);
-   });
+$('#canvas_widget').ready(function() {
+  new Widget().init({ api_id: api_id, api_token: api_token, task: task },
+    document.getElementById("canvas_widget"),
+    function(err, Widget) {
+      if (err)
+        return console.log(err);
+      $(Widget).on("fare", function(event, price) {
+        console.log(price);
+      });
+      $(Widget).on("task", function(event, task) {
+        console.log(task);
+      });
+    });
 });
 </script>
 ```
