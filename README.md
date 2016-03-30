@@ -65,6 +65,7 @@ $(Widget).on(/*event_name*/, function(/*event*/, /*payload*/) {
 
 ### CSS
 ```css
+<style type="text/css">
 .widget_card {
     width: 100%;
     background: white; /*Edit Background Color*/
@@ -93,6 +94,7 @@ $(Widget).on(/*event_name*/, function(/*event*/, /*payload*/) {
     font-weight: 900;
     color: #858585; /*Edit Price Text Color*/
 }
+</style>
 ```
 
 
@@ -100,6 +102,7 @@ $(Widget).on(/*event_name*/, function(/*event*/, /*payload*/) {
 Remember to replace the API keys for your company!
 
 ```javascript
+<script type="text/javascript">
 var api_id = "i7oyoo6kvllf035pm7r885mi"; // Insert your API id
 var api_token = "e71c001ddf31475500e3fad9fca5fff4"; // Insert your API token
 
@@ -137,4 +140,5 @@ new Widget().init({api_id: api_id, api_token: api_token, task: task},
      console.log(task);
    });
 });
+</script>
 ```
