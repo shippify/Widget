@@ -13,7 +13,7 @@ var Widget = function () {
 		this.node = node;
 
 		includeJQueryIfNeeded(function () {
-			var url = 'https://services.shippify.co';
+			var url = 'https://api.shippify.co';
 			$.ajax({
 				method: 'GET',
 				url: url + '/shippify/widget',
