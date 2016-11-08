@@ -1,0 +1,33 @@
+{
+  "name": "shippify-widget",
+  "version": "1.0.0",
+  "description": "This is an easy way to implement shippify services in your store.",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shippify/Widget.git"
+  },
+  "keywords": [
+    "shippify",
+    "widget",
+    "store",
+    "shipping",
+    "way",
+    "vtex",
+    "woocomerce",
+    "wix",
+    "express"
+  ],
+  "author": "Leonardo Larrea",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shippify/Widget/issues"
+  },
+  "homepage": "https://github.com/shippify/Widget#readme"
+}
