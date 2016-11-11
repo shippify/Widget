@@ -1,0 +1,377 @@
+.widget_preview_body_cont {
+	float: left;
+	width: calc(100% - 300px);
+	height: 100%;
+	background: #f2f2f2;
+	padding-top: 10px;
+	padding-left: 22px;
+	padding-right: 22px;
+	box-shadow: -2px 0 20px rgba(0, 0, 0, 0.3);
+}
+.widget_options_cont {
+	float: right;
+	width: 300px;
+	height: 100%;
+	background: white;
+}
+.widget_preview_title_container {
+	width: calc(100% - 300px);
+}
+.widget_preview_container {
+	margin: 0 auto;
+}
+.widget_card {
+	width: 100%;
+}
+.widget_company_logo {
+	position: relative;
+	height: 20px;
+	width: 60px;
+	margin: 0 auto;
+	z-index: 1;
+}
+.widget_logo_img {
+	border-radius: 50%;
+	height: 60px;
+	width: 60px;
+	margin: 0 auto;
+}
+.widget_map_img {
+	height: 155px;
+	width: 260px;
+}
+.widget_map_preview {
+	height: 158px;
+	border-bottom: 3px solid #EC161E;
+}
+#reportsView_body .half_col {
+	width: 48%;
+	float: right
+}
+#reportsView_body .half_col:first-child {
+	float: left;
+}
+#reportsView_body .half_col .price_container_test {
+	/*width: 100%;*/
+	text-align: right;
+}
+.one_col {
+    width: 90%;
+    margin: 0 auto;
+}
+#reportsView_body .one_col .price_container_test {
+	/*width: 100%;*/
+	margin-bottom: 5px;
+	text-align: left;
+	font-size: 10px;
+}
+.widget_price_container_test {
+	height: 35px;
+	/*width: 100%;*/
+	background: #f2f2f2;
+	padding: 4px;
+	text-align: center;
+}
+.widget_price {
+	font-size: 18px;
+	font-weight: 900;
+	color: #858585;
+}
+.ok_btn {
+	height: 33px;
+	width: 100%;
+	background: #ec1c24 !important;
+	margin: 10px 0;
+	border: none;
+	color: white;
+	font-size: 14px;
+	text-transform: uppercase;
+}
+#widget_width_input {
+	height: 24px !important;
+}
+.map_color_options_cont {
+	margin-top: 10px;
+}
+.map_style_color {
+	height: 42px;
+	width: 42px;
+	border-radius: 3px;
+	border: 1px solid #7f7f7f;
+	margin-right: 17px;
+	display: inline-block;
+}
+.map_style_color:last-child {
+	margin-right: 0;
+}
+.map_black {
+	background: #343434;
+}
+.map_gray {
+	background: #e4e4e4;
+}
+.map_white {
+	background: #fff;
+}
+.checkbox_visible {
+	position: relative !important;
+	visibility: visible !important;
+	left: initial !important;
+}
+.checkbox_map_color {
+	height: 42px;
+	margin-left: 7px;
+	margin-right: 10px;
+}
+#widget_view_container .widget_options_cont .half_col {
+	width: 130px;
+}
+#widget_view_container .widget_options_cont .price_container_test {
+	width: 120px;
+	text-align: left;
+}
+.widget_extra_input {
+	height: 24px !important;
+	width: calc(100% - 37px) !important;
+	margin-right: 10px !important;
+}
+.widget_display_logo_cont {
+	height: 55px;
+}
+.widget_display_logo_cont .display_text {
+	position: relative;
+	top: -2px;
+	margin-left: 4px;
+}
+.widget_display_logo_cont .checkbox_visible {
+	margin-left: 10px;
+	margin-top: 9px;
+}
+.widget_options_extra_input_cont i {
+	font-size: 14px;
+	cursor: pointer;
+}
+.widget_add_extra_input_cont {
+	width: 100%;
+}
+.widget_add_extra_input_cont i {
+	float: right;
+	font-size: 14px;
+	color: #d71a1a;
+	margin-right: 13px;
+	cursor: pointer;
+}
+.widget_save_button_cont {
+	width: 100%;
+	margin-top: 42px;
+	float: right;
+	margin-bottom: 40px;
+}
+.save_btn {
+	height: 33px;
+	width: 100px;
+	background: #ed1c24 !important;
+	margin-top: 10px;
+	border: none;
+	color: white;
+	font-size: 14px;
+	text-transform: uppercase;
+	float: right;
+}
+.widget_code_card {
+	width: 100%;
+	height: 108px;
+	padding: 15px;
+}
+.widget_code_card span {
+	color: #b3b3b3
+}
+.link_icon_div {
+	text-align: center;
+}
+.color_picker_w {
+	border: none;
+	padding: 0;
+	margin: 0;
+	margin-left: 53px;
+	width: 15px;
+	height: 18px;
+	cursor: pointer;
+}
+.price_container_test {
+	margin: 0;
+	padding: 4px;
+	width: 115px;
+	height: 25px;
+	border-radius: 3px;
+	border-bottom: 1px solid #909090;
+	text-align: center;
+}
+.price_container_test .line_elipsis {
+	font-size: 11px;
+	font-weight: 800;
+	color: #7B7B7B;
+}
+.submenu_view {
+	background: white;
+	margin: 0 5px;
+	z-index: 3;
+}
+.label_title_h {
+	font-size: 11px;
+	font-weight: 800;
+	display: inline-block;
+}
+.label_title_h {
+	font-size: 11px;
+	font-weight: 800;
+	color: #7B7B7B;
+}
+.half_col .styled-select {
+	height: 25px !important;
+	width: 115px !important;
+	padding: 4px !important;
+	line-height: 1 !important;
+	border: 0 !important;
+	border-bottom: 1px solid #909090 !important;
+	border-radius: 0 !important;
+	background: url('https://cdn.shippify.co/service/panel_img/select_custom_caret_h25.png') no-repeat right #fff !important;
+	-webkit-appearance: none !important;
+}
+.half_col .styled-select:focus {
+	border: 0 !important;
+	border-bottom: 1px solid #909090 !important;
+}
+.name_phone_div {
+	margin-top: 5px;
+}
+.intl-tel-input .flag-container {
+    /* position: relative; */
+    height: 0 !important;
+    width: 0 !important;;
+    margin: 0 !important;;
+    top: 12px !important;;
+    left: -7px !important;;
+    display: inline-block !important;;
+    bottom: 0 !important;;
+    padding: 1px !important;;
+}
+.delivery_col {
+	margin-top: 42px;
+}
+#valid-msg {
+	color: green;
+	float: right;
+	font-size: 10px;
+}
+#error-msg {
+	color: red;
+	float: right;
+	font-size: 10px;
+}
+.multiline_elipsis {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+}
+.line_elipsis {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+}
+.shipperName_col {
+	margin-top: 8px;
+}
+#shippify_phone_field {
+	/* Firefox */
+	width: -moz-calc(100% - 35px);
+	/* WebKit */
+	width: -webkit-calc(100% -  35px);
+	/* Opera */
+	width: -o-calc(100% - 35px);
+	/* Standard */
+	width: calc(100% - 35px);
+	padding-left: 35px;
+}
+
+/* WIDGET - MATERIAL DESIGN */
+.card {
+    position: relative;
+    overflow: hidden;
+    margin: 0.5rem 0 1rem 0;
+    background-color: #fff;
+    transition: box-shadow .25s;
+    border-radius: 2px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+.card input[type=text], .card input[type=password], .card input[type=email], .card input[type=url], .card input[type=time], .card input[type=date], .card input[type=datetime-local], .card input[type=tel], .card input[type=number], .card input[type=search], .card textarea.materialize-textarea {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #9e9e9e;
+    border-radius: 0;
+    outline: none;
+    height: 2rem;
+    width: 100%;
+    font-size: 1rem;
+    margin: 0 0 5px 0;
+    padding: 0;
+    box-shadow: none;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    transition: all .3s;
+}
+
+.card input[type=text]:focus:not([readonly]), .card input[type=password]:focus:not([readonly]), .card input[type=email]:focus:not([readonly]), .card input[type=url]:focus:not([readonly]), .card input[type=time]:focus:not([readonly]), .card input[type=date]:focus:not([readonly]), .card input[type=datetime-local]:focus:not([readonly]), .card input[type=tel]:focus:not([readonly]), .card input[type=number]:focus:not([readonly]), .card input[type=search]:focus:not([readonly]), .card textarea.materialize-textarea:focus:not([readonly]) {
+    border-bottom: 1px solid #26a69a;
+    box-shadow: 0 1px 0 0 #26a69a;
+}
+
+#shippify_map_canvas {
+  width: 100%;
+  height: 100%;
+}
+.widget_price_label_container {
+  height: 35px;
+  width: 100%;
+  background: #f2f2f2;
+  padding: 4px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+@media only screen and (max-width: 370px) {
+  body { font-size: 0.5em; }
+}
+.country{
+	display: flex !important;
+}
+.flag-box{
+	display: flex !important;
+}
+.country-name{
+	margin-left: 3px;
+	font-size: 12px !important;
+	color: grey !important;
+}
+.dial-code{
+	font-size: 12px !important;
+	color: grey !important;
+}
+.intl-tel-input .country-list {
+    list-style: none !important;
+    position: absolute !important;
+    z-index: 2 !important;
+    padding: 0 !important;
+    margin: 0 0 0 -12px !important;
+    box-shadow: 1px 1px 4px rgba(0,0,0,0.2) !important;
+    background-color: white !important;
+    border: 1px solid #CCC !important;
+    white-space: nowrap !important;
+    max-height: 200px !important;
+    overflow-y: scroll !important;
+}

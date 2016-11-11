@@ -1,45 +1,53 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <style type="text/css">
-      html, body { height: 100%; margin: 0; padding: 0; }
-      #canvas {
-        width: 300px;
-      }
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script type="text/javascript" src="./../index.js"></script>
+    <script type="text/javascript" src="lang.js"></script>
+    <link rel="stylesheet" href="style.css">
 
-      .widget_card {
-        width: 100%;
-        background: white; /*Edit Background Color*/
-        color: black; /*Edit Text Color*/
-      }
+    <script type="text/javascript" >
 
-      /*This class define the map preview container of the widget*/
-      .widget_map_preview {
-        height: 158px;
-        border-bottom: 3px solid #EC161E; /*Edit Divider Line Color*/
-      }
+          var apiId = "i7oyoo6kvllf035pm7r885mi"; // Insert your API id
+          var ApiToken = "e71c001ddf31475500e3fad9fca5fff4"; // Insert your API token
 
-      /*This class define the price container of the widget*/
-      .widget_price_label_container {
-        height: 35px;
-        width: 100%;
-        background: #f2f2f2; /*Edit Price Container Background Color*/
-        padding: 4px;
-        text-align: center;
-        margin-bottom: 10px;
-      }
+          /* Task Object (Optional)
+          You can add this pre-data from the moment when you are showing the widget to get more accurate in your widget presentation.
+          */
+          var preTask = {
+            product: {
+              id: "0945", // Product Id (Optional)
+              name: "Shoes Brazil",
+              qty: 4,
+              size: 3 // 1: Extra-Small; 2: Small; 3 - Medium; 4 - Large; 5 - Extra-Large
+            },
+            pickup: { // You can put the warehouse location.
+              lat: "-2.158448",
+              lng: "-79.899463",
+              address: "Maracaibo, 456, y la Rua"
+            }, // Default pickup location information
+          };
 
-      /*This class define the price text of the widget*/
-      .widget_price {
-        font-size: 18px;
-        font-weight: 900;
-        color: #858585; /*Edit Price Text Color*/
-      }
-    </style>
+          var payload={
+            googleMapKey:undefined,// If you want to add your google Maps key
+            credencials:{api_id:apiId,api_token: ApiToken},
+            task: preTask
+          };
+
+          new Widget().init(payload,'canvas', function (err, Widget) {
+             if(err){
+               return console.log(err);
+             }
+             $(Widget).on("fare", function(event, price){
+               console.log(price);
+             });
+             $(Widget).on("task", function(event, task){
+               console.log(task);
+             });
+          });
+    </script>
   </head>
   <body>
-    <script type="text/javascript" src="./../index.js"></script>
-    <div id="canvas"></div>
-    <script type="text/javascript" src="./index.js"></script>
+    <div id="canvas" style="width:300px;height:500px;"></div>
   </body>
 </html>

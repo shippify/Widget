@@ -24,7 +24,7 @@
     "wix",
     "express"
   ],
-  "author": "Leonardo Larrea",
+  "author": "Leonardo Larrea <leonardo@shippfy.co> www.shippify.co",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/shippify/Widget/issues"
