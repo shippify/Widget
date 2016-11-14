@@ -41,17 +41,17 @@
 	width: 260px;
 }
 .widget_map_preview {
-	height: 158px;
+	height: 230px;
 	border-bottom: 3px solid #EC161E;
 }
-#reportsView_body .half_col {
+#shippify_container_widget .half_col {
 	width: 48%;
 	float: right
 }
-#reportsView_body .half_col:first-child {
+#shippify_container_widget .half_col:first-child {
 	float: left;
 }
-#reportsView_body .half_col .price_container_test {
+#shippify_container_widget .half_col .price_container_test {
 	/*width: 100%;*/
 	text-align: right;
 }
@@ -59,7 +59,7 @@
     width: 90%;
     margin: 0 auto;
 }
-#reportsView_body .one_col .price_container_test {
+#shippify_container_widget .one_col .price_container_test {
 	/*width: 100%;*/
 	margin-bottom: 5px;
 	text-align: left;
@@ -256,9 +256,6 @@
     bottom: 0 !important;;
     padding: 1px !important;;
 }
-.delivery_col {
-	margin-top: 42px;
-}
 #valid-msg {
 	color: green;
 	float: right;
@@ -337,7 +334,6 @@
   height: 100%;
 }
 .widget_price_label_container {
-  height: 35px;
   width: 100%;
   background: #f2f2f2;
   padding: 4px;
@@ -374,4 +370,7 @@
     white-space: nowrap !important;
     max-height: 200px !important;
     overflow-y: scroll !important;
+}
+.intl-tel-input .selected-flag .iti-flag{
+	  top: 5px !important;
 }

@@ -9,8 +9,11 @@ if (lang === "es") {
   shippifyAddressPlaceHolder='Dirección';
   shippifyAdditionalInfo='Información Adicional';
   shippifyAdditonalInformation='Información Adicional';
+  shippifyEmail='Correo Electronico';
+  shippifyEmailPlaceHolder='Su correo';
   shippifyPrice='Precio del envio';
   shippifyOK='Listo';
+  shippifyDrawMe='Mueveme!';
   shippifyErrorLocationService='El servicio geolocalización falló.';
   shippifyErrorLocationBrowser='Su navegador no soporta geolocalización.';
 }else if(lang === "pr"){
@@ -23,8 +26,11 @@ if (lang === "es") {
   shippifyAddressPlaceHolder='Address';
   shippifyAdditionalInfo='Additional Info';
   shippifyAdditonalInformation='Additional Information';
+  shippifyEmail='Email';
+  shippifyEmailPlaceHolder='Your Email';
   shippifyPrice='Shipping Price';
   shippifyOK='OK';
+  shippifyDrawMe='Drag me!';
   shippifyErrorLocationService='The Geolocation service failed.';
   shippifyErrorLocationBrowser='Your browser doesn\'t support geolocation.';
 }else{
@@ -37,8 +43,11 @@ if (lang === "es") {
   shippifyAddressPlaceHolder='Address';
   shippifyAdditionalInfo='Additional Info';
   shippifyAdditonalInformation='Additional Information';
+  shippifyEmail='Email';
+  shippifyEmailPlaceHolder='Your Email';
   shippifyPrice='Shipping Price';
   shippifyOK='OK';
+  shippifyDrawMe='Drag me!';
   shippifyErrorLocationService='The Geolocation service failed.';
   shippifyErrorLocationBrowser='Your browser doesn\'t support geolocation.';
 }

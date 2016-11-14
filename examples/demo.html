@@ -8,9 +8,6 @@
 
     <script type="text/javascript" >
 
-          var apiId = "i7oyoo6kvllf035pm7r885mi"; // Insert your API id
-          var ApiToken = "e71c001ddf31475500e3fad9fca5fff4"; // Insert your API token
-
           /* Task Object (Optional)
           You can add this pre-data from the moment when you are showing the widget to get more accurate in your widget presentation.
           */
@@ -28,26 +25,27 @@
             }, // Default pickup location information
           };
 
-          var payload={
+          var widget=new Widget({
+            divById:'canvas',
             googleMapKey:undefined,// If you want to add your google Maps key
-            credencials:{api_id:apiId,api_token: ApiToken},
+            credentials:{apiId:'ijuk8rfq5fctwrtp6m20rudi',apiToken:'it9ngozz1odh1tt9'},
+            allowWareHouse:true,
+            showEmail:false,
+            allowGooglePlaces:true,
+            showAdditionalInfo:true,
+            showPrice:true,
             task: preTask
-          };
+          });
 
-          new Widget().init(payload,'canvas', function (err, Widget) {
-             if(err){
-               return console.log(err);
-             }
-             $(Widget).on("fare", function(event, price){
-               console.log(price);
-             });
-             $(Widget).on("task", function(event, task){
-               console.log(task);
-             });
+          widget.price(function(price){
+            console.log('Price:'+price);
+          });
+          widget.task(function(task){
+            console.log('Task:'+task);
           });
     </script>
   </head>
   <body>
-    <div id="canvas" style="width:300px;height:500px;"></div>
+    <div id="canvas" style="width:300px;height:auto"></div>
   </body>
 </html>
