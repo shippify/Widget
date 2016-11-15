@@ -9,11 +9,15 @@ A Shippify UI Widget which implements and consumes the Last Mile Delivery API.
 ```shell
 bower install shippify-widget
 ```
+## How to use this widget?
+Basically in 2 steps, before checkout and after checkout.
 
----
-## Usage
+### First(Before Checkout)
+You can add this widget in the checkout section to get the client's information for a successful delivery like the  name, phone number, physical address, geolocation, etc. Then when you get this information, you can pass to next step.
 
-### Initializing
+### Second(After Checkout)
+When you get this information, and all the checkout process is completed then you can use the API to create this task in the Shippify System.
+
 ```javascript
 new Widget().init(/*configuration*/, /*DOM Element*/, /*handler*/ function (/*error*/, /*Widget*/) {
   // Your listeners go here.
