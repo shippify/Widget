@@ -10,36 +10,54 @@ A Shippify UI Widget which implements and consumes the Last Mile Delivery API.
 bower install shippify-widget
 ```
 ## How to use this widget?
-Basically in 2 steps, before checkout and after checkout.
+Basically you need to complete 2 steps, before checkout and after checkout.
 
-### First(Before Checkout)
+### 1 Step (Before Checkout)
 You can add this widget in the checkout section to get the client's information for a successful delivery like the  name, phone number, physical address, geolocation, etc. Then when you get this information, you can pass to next step.
 
-### Second(After Checkout)
+### 2 Step (After Checkout)
 When you get this information, and all the checkout process is completed then you can use the API to create this task in the Shippify System.
 
+## Initialization
+To add the widget, you should define the DOM node container where you want render the widget.
+
 ```javascript
-new Widget().init(/*configuration*/, /*DOM Element*/, /*handler*/ function (/*error*/, /*Widget*/) {
-  // Your listeners go here.
-});
+var configuration={
+    containerId:'canvas', //DOM node container
+    credentials:{apiId:'XXXXXXXXXXXXXXXXXX',apiToken:'XXXXXXXXXXXXXXXXXXX'}, //Container
+    initialInfo:initialInfo,  //Data initial to get the final task.
+    allowNearbyWarehouse:true,
+    showFieldEmail:true,
+    showAdditionalInfo:true,
+    showPrice:true, 
+    googleMapKey:undefined,// You can to add your google Maps key
+    allowGooglePlaces:true
+}
+var widget = new Widget(configuration);// Constructor.
+
 ```
 
 ### Configuration
-Shippify uses API keys to allow access to the API. You can get an API key pair signing in your account at [admin portal](https://services.shippify.co/settings)
+Shippify uses API keys to allow access to the API. You can get an API key pair signing in your account at [admin portal](https://admin.shippify.co/settings)
 
-The next parameters are required for the widget
+The next parameters are required for the configuration widget
 
-- api_id: Company's API id.
-- api_token: Company's API token.
-- task: Default task object fields.
-
+- ```containerId``` - The id from DOM element where you want to add the widget.
+- ```credentials:{apiId:'XXXXXXXXXXXXXXXXXX',apiToken:'XXXXXXXXXXXXXXXXXXX'}``` - Company's API credentials from Shippify.
+- ```initialInfo:[Object]``` - Initial information object.
+- ```allowNearbyWarehouse:[true|false]``` - Shippify will set nearest warehouse as pickup location, otherwise specify the pickup address manually.
+- ```showFieldEmail:[true|false]``` - If you need to get the email to send when you create the task and send  the shippify tracking email to get more user experience.
+- 
 
 ### Listeners
 Must be located inside the handler function.
 
 ```javascript
-$(Widget).on(/*event_name*/, function(/*event*/, /*payload*/) {
-  // Your logic goes here.
+widget.price(function(price){
+  console.log(price);
+});
+widget.task(function(task){
+  console.log(task);
 });
 ```
 
