@@ -5,40 +5,36 @@ import { platforms, vehicleTypes } from './constants'
 import errors from './errors'
 
 window.shippify = {
+  vehicleTypes,
+  errors,
+  places: {
+    Address,
+    LatLng,
+    Warehouse,
+  },
   integrations: {
     platforms,
-    errors,
-    places: {
-      Address,
-      LatLng,
-      Warehouse,
-    },
     OrderManager,
     Widget,
   }
 }
 
-  var pickupPlace = new window.shippify.integrations.places.Address('Guayaquil, EC')
-  var orderManagerOptions = {
-    credentials: {
-      apiId: 'a',
-      apiSecret: 's'
-    }
-  }
-
-  try {
-    var orderManager = new window.shippify.integrations.OrderManager({
-      id: 'order-reference-id',
-      platform: window.shippify.integrations.platforms.VTEX,
-      pickupPlace,
-    }, orderManagerOptions)
-
-    new window.shippify.integrations.Widget(orderManager, document.getElementById('root'))
-    orderManager.generateOrder({ id: 'order-reference-id', contact: { name: 'json', phone: '23' }, location: { address: 'john', latitude: 90, longitude: -180 }, vehicleType: vehicleTypes.CAR }, (error, json) => {
-      console.log(error)
-      console.log(json)
-    })
-    console.log(orderManager)
-  } catch (error) {
-    console.log(error.meta)
-  }
+// const { shippify } = window
+//
+// const pickupPlace = new shippify.places.Address('Av. 9 de Octubre, Guayaquil, EC')
+// const orderTemplate = {
+//   id: 'my-platform-reference-id',
+//   platform: shippify.integrations.platforms.VTEX,
+//   pickupPlace,
+// }
+// const orderManagerOptions = {
+//   credentials: {
+//     apiId: 'my-shippify-api-id',
+//     apiSecret: 'my-shippify-api-secret'
+//   },
+//   // googleMapsAPIKey: 'my-google-maps-api-key'
+// }
+// const orderManager = new shippify.integrations.OrderManager(orderTemplate, orderManagerOptions)
+//
+// const shippifyWidgetContainer = document.getElementById('root')
+// const widget = new shippify.integrations.Widget(orderManager, shippifyWidgetContainer)

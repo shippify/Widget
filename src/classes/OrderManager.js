@@ -62,7 +62,7 @@ class OrderManager {
     if (typeof longitude !== 'number' || longitude < -180 || longitude > 180) {
       throw generateError(errors.invalidValue('order.location.longitude', longitude))
     }
-    const { id, platform, pickupPlace } = this
+    const { apiToken, id, platform, pickupPlace } = this
     pickupPlace.getLocation({ googleMapsAPIKey: this.googleMapsAPIKey }, (error, pickupLocation) => {
       if (error) return cb(error)
       const order = {
@@ -78,7 +78,21 @@ class OrderManager {
           specialInstructions,
         }
       }
-      cb(null, order)
+      const url = new URL('http://staging.shippify.co')
+      url.pathname = '/orders'
+      const body = { order }
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Basic ${apiToken}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body)
+      })
+      .then(
+        response => cb(null, response.ok),
+        error => cb(error)
+      )
     })
   }
 }
