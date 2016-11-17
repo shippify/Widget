@@ -1,6 +1,6 @@
 import OrderManager from './OrderManager'
 import errors, { generateError } from './../errors'
-import html from './../widget.html.js'
+import widgetTemplate from './../widget.ejs'
 
 class Widget {
   constructor(orderManager, node) {
@@ -15,7 +15,7 @@ class Widget {
     this.order = {
       contact: {}
     }
-    this.node.innerHTML = html
+    this.node.innerHTML = widgetTemplate()
 
     const { document, google } = window
     const mapContainer = document.getElementById('shpy-map-container')
