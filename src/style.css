@@ -1,0 +1,60 @@
+.container{
+}
+.CCYTE__button_vehicle{
+  background-color: white;
+  color: black;
+  border: 2px solid #e7e7e7;
+  width: 100px;
+  height: 44px;
+  cursor: pointer;
+}
+.CCYTE__button_vehicle:hover{
+  border:3px solid #ef404b;
+}
+
+.CCYTE__button_vehicle_group{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 80%;
+}
+.CCYTE__container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+}
+.CCYTE_container_icon{
+  width: 60px;
+  height: 50px;
+  margin-right: 10px;
+  background-color: #f7f7f7;
+}
+.CCYTE_container_icon img {
+  height: 24px;
+  width: 24px;
+  display: flex;
+  margin: 15px 17px;
+}
+.CCYTE_input_form  {
+    background-color: #f7f7f7;
+    width: 80%;
+    height: 50px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.CCYTE__button_submit{
+    width: 170px;
+    background-color: #ef404b;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 40%;
+}
