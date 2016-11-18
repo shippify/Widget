@@ -1,53 +1,40 @@
-<div >
-  <div style="height: 200px;" id="shpy-map-container"></div>
+<div class="shpy__widget">
+  <div style="height: 150px;" id="shpy-map-container"></div>
 
-  <div class="CCYTE__container">
-    <div class="CCYTE_container_icon">
-      <img src="images/place.svg">
+  <div>
+    <div class="shpy__form__field">
+      <div class="shpy__form__icon shpy__form__address-icon"></div>
+      <input id="shpy-delivery-address-input" class="shpy__form__input" type="text" placeholder="Insert delivery address"/>
     </div>
-    <input class="CCYTE_input_form" id="shpy-delivery-address-input" type="text" placeholder="Insert address"/>
-  </div>
 
-  <div class="CCYTE__container">
-    <div class="CCYTE_container_icon">
-      <img src="images/person.svg">
+    <div class="shpy__form__field">
+      <div class="shpy__form__icon shpy__form__name-icon"></div>
+      <input id="shpy-delivery-contact-name-input" class="shpy__form__input" type="text" placeholder="Insert contact name"/>
     </div>
-    <input class="CCYTE_input_form" id="shpy-delivery-contact-name-input" type="text" placeholder="Insert contact name"/>
-  </div>
 
-  <div class="CCYTE__container">
-    <div class="CCYTE_container_icon">
-      <img src="images/person.svg">
+    <div class="shpy__form__field">
+      <div class="shpy__form__icon shpy__form__email-icon"></div>
+      <input id="shpy-delivery-contact-email-input" class="shpy__form__input" type="text" placeholder="Insert contact email"/>
     </div>
-    <input class="CCYTE_input_form" id="shpy-delivery-contact-email-input" type="text" placeholder="Insert contact email"/>
-  </div>
 
-  <div class="CCYTE__container">
-    <div class="CCYTE_container_icon">
-      <img src="images/call.svg">
+    <div class="shpy__form__field">
+      <div class="shpy__form__icon shpy__form__phone-icon"></div>
+      <input id="shpy-delivery-contact-phone-input" class="shpy__form__input" type="text" placeholder="Insert contact phone"/>
     </div>
-    <input class="CCYTE_input_form" id="shpy-delivery-contact-phone-input" type="text" placeholder="Insert contact phone"/>
-  </div>
 
-  <div class="CCYTE__container">
-    <div class="CCYTE_container_icon">
-      <img src="images/info-outline.svg">
-    </div>
-    <input class="CCYTE_input_form" id="shpy-delivery-special_instructions-input" type="text" placeholder="Insert special instructions"/>
-  </div>
-
-  <div class="CCYTE__container">
-    <div class="CCYTE_container_icon">
-      <span> size </span>
-    </div>
-    <div class="CCYTE__button_vehicle_group">
-      <button class="CCYTE__button_vehicle" ><img src="./images/icon_v_bike.svg"/></button>
-      <button class="CCYTE__button_vehicle" ><img src = {car}/></button>
-      <button class="CCYTE__button_vehicle" ><img src = {moto}/></button>
-      <button class="CCYTE__button_vehicle" ><img src = {van}/></button>
-      <button class="CCYTE__button_vehicle" ><img src = {truck}/></button>
+    <div class="shpy__form__field">
+      <div class="shpy__form__icon shpy__form__instructions-icon"></div>
+      <input id="shpy-delivery-special_instructions-input" class="shpy__form__input" type="text" placeholder="Insert special instructions"/>
     </div>
   </div>
 
-  <button id="shpy-order-button" class="CCYTE__button_submit">Order</button>
+  <div class="shpy__vehicle-bar">
+    <button id="shpy-bike-button" class="shpy__vehicle-bar__option shpy__vehicle-bar__option--selected shpy__vehicle-bar__bike-option" data-vehicle-type="bike"></button>
+    <button id="shpy-moto-button" class="shpy__vehicle-bar__option shpy__vehicle-bar__moto-option" data-vehicle-type="moto"></button>
+    <button id="shpy-car-button" class="shpy__vehicle-bar__option shpy__vehicle-bar__car-option" data-vehicle-type="car"></button>
+    <button id="shpy-van-button" class="shpy__vehicle-bar__option shpy__vehicle-bar__van-option" data-vehicle-type="van"></button>
+    <button id="shpy-truck-button" class="shpy__vehicle-bar__option shpy__vehicle-bar__truck-option" data-vehicle-type="truck"></button>
+  </div>
+
+  <button id="shpy-order-button" class="shpy__order-button">Order</button>
 </div>

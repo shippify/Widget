@@ -4,12 +4,6 @@ import { Address, LatLng, Warehouse } from './classes/places'
 import { platforms, vehicleTypes } from './constants'
 import errors from './errors'
 
-import bike from './images/icon_v_bike.svg';
-import car from './images/icon_v_car.svg';
-import moto from './images/icon_v_moto.svg';
-import van from './images/icon_v_van.svg';
-import truck from './images/icon_v_truck.svg';
-
 import './style.css';
 
 window.shippify = {

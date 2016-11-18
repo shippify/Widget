@@ -1,42 +1,139 @@
-.container{
-}
-.CCYTE__button_vehicle{
-  background-color: white;
-  color: black;
-  border: 2px solid #e7e7e7;
-  width: 100px;
-  height: 44px;
-  cursor: pointer;
-}
-.CCYTE__button_vehicle:hover{
-  border:3px solid #ef404b;
+.shpy__widget {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
 }
 
-.CCYTE__button_vehicle_group{
+.shpy__form:first-child {
+  margin-top: 0;
+}
+
+.shpy__form:last-child {
+  margin-bottom: 0;
+}
+
+.shpy__form__field {
+  display: flex;
+  margin: 8px 0 8px 0;
+}
+
+.shpy__form__icon {
+  background-color: #777;
+  flex: 0 0 50px;
+  mask-repeat: no-repeat;
+  mask-position: center;
+}
+
+.shpy__form__address-icon {
+  mask-image: url(./images/place.svg);
+}
+
+.shpy__form__name-icon {
+  mask-image: url(./images/person.svg);
+}
+
+.shpy__form__email-icon {
+  mask-image: url(./images/person.svg);
+}
+
+.shpy__form__phone-icon {
+  mask-image: url(./images/call.svg);
+}
+
+.shpy__form__instructions-icon {
+  mask-image: url(./images/info-outline.svg);
+}
+
+.shpy__form__input {
+  background-color: #f7f7f7;
+  flex: 1 1 auto;
+  height: 20px;
+  padding: 12px 20px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.shpy__form__input:focus {
+  outline: 0;
+}
+
+.shpy__vehicle-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 80%;
 }
-.CCYTE__container{
+
+.shpy__vehicle-bar__option {
+  background-color: #777;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  border: 2px solid #e7e7e7;
+  color: black;
+  cursor: pointer;
+  flex: 1 1 auto;
+  height: 30px;
+}
+
+.shpy__vehicle-bar__option:hover {
+  outline: 0;
+  background-color: #555;
+}
+
+.shpy__vehicle-bar__option--selected {
+  background-color: #ef404b;
+}
+
+.shpy__vehicle-bar__option--selected:hover {
+  background-color: #ef404b;
+}
+
+.shpy__vehicle-bar__bike-option {
+  mask-image: url(./images/icon_v_bike.svg);
+}
+
+.shpy__vehicle-bar__moto-option {
+  mask-image: url(./images/icon_v_moto.svg);
+}
+
+.shpy__vehicle-bar__car-option {
+  mask-image: url(./images/icon_v_car.svg);
+}
+
+.shpy__vehicle-bar__van-option {
+  mask-image: url(./images/icon_v_van.svg);
+}
+
+.shpy__vehicle-bar__truck-option {
+  mask-image: url(./images/icon_v_truck.svg);
+}
+
+.shpy__button_vehicle_bike {
+  background-image: url(./images/icon_v_bike.svg);
+}
+
+/*.shpy__button_vehicle:hover{
+  border:3px solid #ef404b;
+}*/
+
+/*.shpy__container{
   display: flex;
   flex-direction: row;
   align-items: center;
 
 }
-.CCYTE_container_icon{
+.shpy_container_icon{
   width: 60px;
   height: 50px;
   margin-right: 10px;
   background-color: #f7f7f7;
 }
-.CCYTE_container_icon img {
+.shpy_container_icon img {
   height: 24px;
   width: 24px;
   display: flex;
   margin: 15px 17px;
 }
-.CCYTE_input_form  {
+.shpy_input_form  {
     background-color: #f7f7f7;
     width: 80%;
     height: 50px;
@@ -45,16 +142,17 @@
     display: inline-block;
     border: 1px solid #ccc;
     box-sizing: border-box;
-}
+}*/
 
-.CCYTE__button_submit{
-    width: 170px;
-    background-color: #ef404b;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-left: 40%;
+.shpy__order-button {
+  align-self: center;
+  background-color: #ef404b;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: white;
+  height: 40px;
+  margin: 8px 0 8px 0;
+  width: 170px;
+  outline: 0;
 }
