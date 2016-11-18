@@ -4,6 +4,10 @@
   flex-direction: column;
 }
 
+.shpy__form {
+  margin: 8px 0 8px 0;
+}
+
 .shpy__form:first-child {
   margin-top: 0;
 }
@@ -46,36 +50,33 @@
 
 .shpy__form__input {
   background-color: #f7f7f7;
-  flex: 1 1 auto;
-  height: 20px;
-  padding: 12px 20px;
   border: 1px solid #ccc;
   box-sizing: border-box;
-}
-
-.shpy__form__input:focus {
+  flex: 1 1 auto;
+  height: 20px;
   outline: 0;
+  padding: 12px 20px;
 }
 
 .shpy__vehicle-bar {
+align-items: center;
   display: flex;
-  align-items: center;
   justify-content: space-between;
 }
 
 .shpy__vehicle-bar__option {
   background-color: #777;
-  mask-repeat: no-repeat;
-  mask-position: center;
   border: 2px solid #e7e7e7;
   color: black;
   cursor: pointer;
   flex: 1 1 auto;
   height: 30px;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  outline: 0;
 }
 
 .shpy__vehicle-bar__option:hover {
-  outline: 0;
   background-color: #555;
 }
 
@@ -107,43 +108,6 @@
   mask-image: url(./images/icon_v_truck.svg);
 }
 
-.shpy__button_vehicle_bike {
-  background-image: url(./images/icon_v_bike.svg);
-}
-
-/*.shpy__button_vehicle:hover{
-  border:3px solid #ef404b;
-}*/
-
-/*.shpy__container{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-}
-.shpy_container_icon{
-  width: 60px;
-  height: 50px;
-  margin-right: 10px;
-  background-color: #f7f7f7;
-}
-.shpy_container_icon img {
-  height: 24px;
-  width: 24px;
-  display: flex;
-  margin: 15px 17px;
-}
-.shpy_input_form  {
-    background-color: #f7f7f7;
-    width: 80%;
-    height: 50px;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-}*/
-
 .shpy__order-button {
   align-self: center;
   background-color: #ef404b;
@@ -153,6 +117,6 @@
   color: white;
   height: 40px;
   margin: 8px 0 8px 0;
-  width: 170px;
   outline: 0;
+  width: 170px;
 }

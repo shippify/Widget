@@ -3,19 +3,22 @@ import errors, { generateError } from './../errors'
 import widgetTemplate from './../widget.ejs'
 
 class Widget {
-  constructor(orderManager, node) {
+  constructor(orderManager, node, { excludedFields = [] } = {}) {
     if (!(orderManager instanceof OrderManager)) {
       throw generateError(errors.invalidValue('orderManager', orderManager))
     }
     if (!window.document.body.contains(node)) {
       throw generateError(errors.invalidValue('node', node))
     }
+    if (!Array.isArray(excludedFields)) {
+      throw generateError(errors.invalidValue('options.excludedFields', excludedFields))
+    }
     this.orderManager = orderManager
     this.node = node
     this.order = {
       contact: {}
     }
-    this.node.innerHTML = widgetTemplate()
+    this.node.innerHTML = widgetTemplate({ excludedFields })
 
     const { document, google } = window
     const mapContainer = document.getElementById('shpy-map-container')
@@ -64,27 +67,47 @@ class Widget {
     const specialInstructionsInput = document.getElementById('shpy-delivery-special_instructions-input')
     const orderButton = document.getElementById('shpy-order-button')
 
+    const deselectVehicleButtons = () => {
+      bikeButton.classList.remove('shpy__vehicle-bar__option--selected')
+      motoButton.classList.remove('shpy__vehicle-bar__option--selected')
+      carButton.classList.remove('shpy__vehicle-bar__option--selected')
+      vanButton.classList.remove('shpy__vehicle-bar__option--selected')
+      truckButton.classList.remove('shpy__vehicle-bar__option--selected')
+    }
+
     this.onBikeButtonListener = bikeButton.addEventListener('click', event => {
+      deselectVehicleButtons()
+      event.target.classList.add('shpy__vehicle-bar__option--selected')
       this.order.vehicleType = event.target.getAttribute('data-vehicle-type')
     })
     this.onMotoButtonListener = motoButton.addEventListener('click', event => {
+      deselectVehicleButtons()
+      event.target.classList.add('shpy__vehicle-bar__option--selected')
       this.order.vehicleType = event.target.getAttribute('data-vehicle-type')
     })
     this.onCarButtonListener = carButton.addEventListener('click', event => {
+      deselectVehicleButtons()
+      event.target.classList.add('shpy__vehicle-bar__option--selected')
       this.order.vehicleType = event.target.getAttribute('data-vehicle-type')
     })
     this.onVanButtonListener = vanButton.addEventListener('click', event => {
+      deselectVehicleButtons()
+      event.target.classList.add('shpy__vehicle-bar__option--selected')
       this.order.vehicleType = event.target.getAttribute('data-vehicle-type')
     })
     this.onTruckButtonListener = truckButton.addEventListener('click', event => {
+      deselectVehicleButtons()
+      event.target.classList.add('shpy__vehicle-bar__option--selected')
       this.order.vehicleType = event.target.getAttribute('data-vehicle-type')
     })
     this.onContactNameChangeListener = contactNameInput.addEventListener('keyup', event => {
       this.order.contact.name = event.target.value ? event.target.value : undefined
     })
-    this.onContactEmailChangeListener = contactEmailInput.addEventListener('keyup', event => {
-      this.order.contact.email = event.target.value ? event.target.value : undefined
-    })
+    if (contactEmailInput) {
+      this.onContactEmailChangeListener = contactEmailInput.addEventListener('keyup', event => {
+        this.order.contact.email = event.target.value ? event.target.value : undefined
+      })
+    }
     this.onContactPhoneChangeListener = contactPhoneInput.addEventListener('keyup', event => {
       this.order.contact.phone = event.target.value ? event.target.value : undefined
     })
@@ -132,8 +155,10 @@ class Widget {
     this.onDeliveryAddressChangeListener = null
     this.onContactNameChangeListener.remove()
     this.onContactNameChangeListener = null
-    this.onContactEmailChangeListener.remove()
-    this.onContactEmailChangeListener = null
+    if (this.onContactEmailChangeListener) {
+      this.onContactEmailChangeListener.remove()
+      this.onContactEmailChangeListener = null
+    }
     this.onContactPhoneChangeListener.remove()
     this.onContactPhoneChangeListener = null
     this.onSpecialInstructionsChangeListener.remove()

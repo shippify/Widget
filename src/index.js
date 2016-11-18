@@ -27,6 +27,7 @@ window.shippify = {
    id: 'my-platform-reference-id',
    platform: shippify.integrations.platforms.VTEX,
    pickupPlace,
+   items: [],
  }
  const orderManagerOptions = {
    credentials: {
@@ -38,4 +39,6 @@ window.shippify = {
  const orderManager = new shippify.integrations.OrderManager(orderTemplate, orderManagerOptions)
 
 const shippifyWidgetContainer = document.getElementById('root')
-const widget = new shippify.integrations.Widget(orderManager, shippifyWidgetContainer)
+const widget = new shippify.integrations.Widget(orderManager, shippifyWidgetContainer, {
+  excludedFields: ['email']
+})

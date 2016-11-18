@@ -3,22 +3,22 @@ import { platforms, vehicleTypes } from './../constants'
 import errors, { generateError } from './../errors'
 
 class OrderManager {
-  constructor({ id, platform, pickupPlace }, { credentials: { apiId, apiSecret }, googleMapsAPIKey }) {
+  constructor({ id, platform, pickupPlace, items }, { credentials: { apiId, apiSecret }, googleMapsAPIKey }) {
     if (typeof apiId !== 'string' || !apiId || typeof apiSecret !== 'string' || !apiSecret) {
       throw generateError(errors.invalidValue('options.credentials', { apiId, apiSecret }))
     }
     if (typeof id !== 'string' || !id) {
       throw generateError(errors.invalidValue('order.id', id))
     }
-    if (Object.keys(platforms).map(key => platforms[key]).indexOf(platform) === -1) {
+    if (typeof platform !== 'undefined' && Object.keys(platforms).map(key => platforms[key]).indexOf(platform) === -1) {
       throw generateError(errors.invalidValue('order.platform', platform))
     }
     if (typeof pickupPlace !== 'undefined' && !isPlace(pickupPlace)) {
       throw generateError(errors.invalidValue('order.pickupPlace', pickupPlace))
     }
-    // if (!Array.isArray(excludedFields)) {
-    //   throw generateError(errors.invalidValue('options.excludedFields', excludedFields))
-    // }
+    if (!Array.isArray(items)) {
+      throw generateError(errors.invalidValue('order.items', items))
+    }
     if (typeof googleMapsAPIKey !== 'undefined' && (typeof googleMapsAPIKey !== 'string' || !googleMapsAPIKey)) {
       throw generateError(errors.invalidValue('options.googleMapsAPIKey', googleMapsAPIKey))
     }
@@ -62,13 +62,14 @@ class OrderManager {
     if (typeof longitude !== 'number' || longitude < -180 || longitude > 180) {
       throw generateError(errors.invalidValue('order.location.longitude', longitude))
     }
-    const { apiToken, id, platform, pickupPlace } = this
+    const { apiToken, id, platform, pickupPlace, items } = this
     pickupPlace.getLocation({ googleMapsAPIKey: this.googleMapsAPIKey }, (error, pickupLocation) => {
       if (error) return cb(error)
       const order = {
         id,
         platform,
         vehicleType,
+        items,
         pickup: {
           location: pickupLocation
         },
