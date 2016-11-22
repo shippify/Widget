@@ -1,0 +1,122 @@
+.shpy__widget {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+}
+
+.shpy__form {
+  margin: 8px 0 8px 0;
+}
+
+.shpy__form:first-child {
+  margin-top: 0;
+}
+
+.shpy__form:last-child {
+  margin-bottom: 0;
+}
+
+.shpy__form__field {
+  display: flex;
+  margin: 8px 0 8px 0;
+}
+
+.shpy__form__icon {
+  background-color: #777;
+  flex: 0 0 50px;
+  mask-repeat: no-repeat;
+  mask-position: center;
+}
+
+.shpy__form__address-icon {
+  mask-image: url(./images/place.svg);
+}
+
+.shpy__form__name-icon {
+  mask-image: url(./images/person.svg);
+}
+
+.shpy__form__email-icon {
+  mask-image: url(./images/person.svg);
+}
+
+.shpy__form__phone-icon {
+  mask-image: url(./images/call.svg);
+}
+
+.shpy__form__instructions-icon {
+  mask-image: url(./images/info-outline.svg);
+}
+
+.shpy__form__input {
+  background-color: #f7f7f7;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  height: 20px;
+  outline: 0;
+  padding: 12px 20px;
+}
+
+.shpy__vehicle-bar {
+align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.shpy__vehicle-bar__option {
+  background-color: #777;
+  border: 2px solid #e7e7e7;
+  color: black;
+  cursor: pointer;
+  flex: 1 1 auto;
+  height: 30px;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  outline: 0;
+}
+
+.shpy__vehicle-bar__option:hover {
+  background-color: #555;
+}
+
+.shpy__vehicle-bar__option--selected {
+  background-color: #ef404b;
+}
+
+.shpy__vehicle-bar__option--selected:hover {
+  background-color: #ef404b;
+}
+
+.shpy__vehicle-bar__bike-option {
+  mask-image: url(./images/icon_v_bike.svg);
+}
+
+.shpy__vehicle-bar__moto-option {
+  mask-image: url(./images/icon_v_moto.svg);
+}
+
+.shpy__vehicle-bar__car-option {
+  mask-image: url(./images/icon_v_car.svg);
+}
+
+.shpy__vehicle-bar__van-option {
+  mask-image: url(./images/icon_v_van.svg);
+}
+
+.shpy__vehicle-bar__truck-option {
+  mask-image: url(./images/icon_v_truck.svg);
+}
+
+.shpy__order-button {
+  align-self: center;
+  background-color: #ef404b;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: white;
+  height: 40px;
+  margin: 8px 0 8px 0;
+  outline: 0;
+  width: 170px;
+}

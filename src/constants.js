@@ -4,9 +4,9 @@ export const platforms = {
 }
 
 export const vehicleTypes = {
-  BICYCLE: 'bicycle',
-  MOTORCYCLE: 'motorcycle',
+  BIKE: 'bike',
+  MOTO: 'moto',
   CAR: 'car',
-  SUV: 'suv',
+  VAN: 'van',
   TRUCK: 'truck',
 }
