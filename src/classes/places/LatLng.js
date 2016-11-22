@@ -29,9 +29,7 @@ class LatLng {
       } else {
         cb(new Error(status))
       }
-    }, error => {
-      cb(error)
-    })
+    }, error => cb(error))
   }
 }
 

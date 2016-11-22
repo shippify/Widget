@@ -26,9 +26,7 @@ class Address {
       } else {
         cb(new Error(status))
       }
-    }, error => {
-      cb(error)
-    })
+    }, error => cb(error))
   }
 }
 

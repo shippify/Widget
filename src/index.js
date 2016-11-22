@@ -27,12 +27,14 @@ window.shippify = {
    id: 'my-platform-reference-id',
    platform: shippify.integrations.platforms.VTEX,
    pickupPlace,
-   items: [],
+   items: [
+     { name: 'Dog', size: 3, quantity: 10 }
+   ],
  }
  const orderManagerOptions = {
    credentials: {
-     apiId: 'my-shippify-api-id',
-     apiSecret: 'my-shippify-api-secret'
+     apiId: 'i7p0cengnryk96fzip9442t9',
+     apiSecret: 'ivl7uv01q46j38fr'
    },
    // googleMapsAPIKey: 'my-google-maps-api-key'
  }

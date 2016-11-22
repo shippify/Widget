@@ -29,7 +29,8 @@ class Widget {
       zoom: 13
     })
     const searchBox = new google.maps.places.SearchBox(deliveryLocationInput)
-    const marker = new google.maps.Marker({ map })
+    const marker = new google.maps.Marker({ map, draggable: true })
+    const geocoder = new google.maps.Geocoder()
 
     this.onMapBoundsChangeListener = map.addListener('idle', () => {
       searchBox.setBounds(map.getBounds())
@@ -50,6 +51,34 @@ class Widget {
       map.setCenter(place.geometry.location)
       map.setZoom(13)
       marker.setPosition(place.geometry.location)
+      this.orderManager.calculateFee(location.latitude, location.longitude, (error, receipt) => {
+        console.log(error)
+        if (error) return
+        console.log(receipt)
+      })
+    })
+    this.onMarkerPositionChangeListener = marker.addListener('dragend', () => {
+      const position = marker.getPosition()
+      geocoder.geocode({ location: position }, (results, status) => {
+        if (status === google.maps.GeocoderStatus.OK) {
+          const { formatted_address: address, geometry: { location: { lat, lng } } } = results[0]
+          const location = {
+            address,
+            latitude: lat(),
+            longitude: lng()
+          }
+          this.order.location = location
+          deliveryLocationInput.value = address
+
+          this.orderManager.calculateFee(location.latitude, location.longitude, (error, receipt) => {
+            console.log(error)
+            if (error) return
+            console.log(receipt)
+          })
+        } else {
+          deliveryLocationInput.value = ''
+        }
+      })
     })
 
     this.map = map
@@ -76,29 +105,44 @@ class Widget {
     }
 
     this.onBikeButtonListener = bikeButton.addEventListener('click', event => {
+      const isSelected = event.target.classList.contains('shpy__vehicle-bar__option--selected')
       deselectVehicleButtons()
-      event.target.classList.add('shpy__vehicle-bar__option--selected')
-      this.order.vehicleType = event.target.getAttribute('data-vehicle-type')
+      if (!isSelected) {
+        event.target.classList.add('shpy__vehicle-bar__option--selected')
+      }
+      this.order.vehicleType = !isSelected ? event.target.getAttribute('data-vehicle-type') : undefined
     })
     this.onMotoButtonListener = motoButton.addEventListener('click', event => {
+      const isSelected = event.target.classList.contains('shpy__vehicle-bar__option--selected')
       deselectVehicleButtons()
-      event.target.classList.add('shpy__vehicle-bar__option--selected')
-      this.order.vehicleType = event.target.getAttribute('data-vehicle-type')
+      if (!isSelected) {
+        event.target.classList.add('shpy__vehicle-bar__option--selected')
+      }
+      this.order.vehicleType = !isSelected ? event.target.getAttribute('data-vehicle-type') : undefined
     })
     this.onCarButtonListener = carButton.addEventListener('click', event => {
+      const isSelected = event.target.classList.contains('shpy__vehicle-bar__option--selected')
       deselectVehicleButtons()
-      event.target.classList.add('shpy__vehicle-bar__option--selected')
-      this.order.vehicleType = event.target.getAttribute('data-vehicle-type')
+      if (!isSelected) {
+        event.target.classList.add('shpy__vehicle-bar__option--selected')
+      }
+      this.order.vehicleType = !isSelected ? event.target.getAttribute('data-vehicle-type') : undefined
     })
     this.onVanButtonListener = vanButton.addEventListener('click', event => {
+      const isSelected = event.target.classList.contains('shpy__vehicle-bar__option--selected')
       deselectVehicleButtons()
-      event.target.classList.add('shpy__vehicle-bar__option--selected')
-      this.order.vehicleType = event.target.getAttribute('data-vehicle-type')
+      if (!isSelected) {
+        event.target.classList.add('shpy__vehicle-bar__option--selected')
+      }
+      this.order.vehicleType = !isSelected ? event.target.getAttribute('data-vehicle-type') : undefined
     })
     this.onTruckButtonListener = truckButton.addEventListener('click', event => {
+      const isSelected = event.target.classList.contains('shpy__vehicle-bar__option--selected')
       deselectVehicleButtons()
-      event.target.classList.add('shpy__vehicle-bar__option--selected')
-      this.order.vehicleType = event.target.getAttribute('data-vehicle-type')
+      if (!isSelected) {
+        event.target.classList.add('shpy__vehicle-bar__option--selected')
+      }
+      this.order.vehicleType = !isSelected ? event.target.getAttribute('data-vehicle-type') : undefined
     })
     this.onContactNameChangeListener = contactNameInput.addEventListener('keyup', event => {
       this.order.contact.name = event.target.value ? event.target.value : undefined
@@ -116,18 +160,23 @@ class Widget {
     })
     this.onOrderButtonClickListener = orderButton.addEventListener('click', () => {
       try {
-        this.orderManager.generateOrder(this.order, (error, success) => {
-          console.log(error)
-          if (error) return
-          console.log(success)
+        this.orderManager.generateOrder(this.order, (error, order) => {
+          this.listeners.forEach(listener => listener(error, order))
         })
       } catch (error) {
-        console.log(error)
+        this.listeners.forEach(listener => listener(error))
       }
     })
+
+    this.listeners = []
+  }
+
+  addListener(listener) {
+    this.listeners.push(listener)
   }
 
   destroy() {
+    this.listeners = []
     this.order = null
 
     this.onSearchBoxPlaceChangeListener.remove()
@@ -165,7 +214,6 @@ class Widget {
     this.onSpecialInstructionsChangeListener = null
 
     this.node.innerHTML = ''
-    this.node = null
 
     this.orderManager = null
   }

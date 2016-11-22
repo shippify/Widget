@@ -9,9 +9,26 @@ class Warehouse {
     }
   }
 
-  getLocation(options = {}, cb) {
+  getLocation({ apiToken } = {}, cb) {
+    if (typeof apiToken !== 'string' || !apiToken) return cb(new Error('Must include shippify\'s API token.'))
     const { warehouseId } = this
-    cb(null, { warehouseId })
+    const url = new URL('http://staging.shippify.co')
+    url.pathname = `/depots/${warehouseId}`
+    fetch(url, {
+      headers: {
+        'Authorization': `Basic ${apiToken}`,
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then(({ code, payload }) => {
+      if (code === 'OK') {
+        const { latitude, longitude, address } = payload.data.depot.location
+        cb(null, { latitude, longitude, address })
+      } else {
+        cb(new Error(code))
+      }
+    }, error => cb(error))
   }
 }
 

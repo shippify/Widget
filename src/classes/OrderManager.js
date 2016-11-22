@@ -3,7 +3,7 @@ import { platforms, vehicleTypes } from './../constants'
 import errors, { generateError } from './../errors'
 
 class OrderManager {
-  constructor({ id, platform, pickupPlace, items }, { credentials: { apiId, apiSecret }, googleMapsAPIKey }) {
+  constructor({ id, platform, pickupPlace, items, specialInstructions }, { credentials: { apiId, apiSecret }, googleMapsAPIKey }) {
     if (typeof apiId !== 'string' || !apiId || typeof apiSecret !== 'string' || !apiSecret) {
       throw generateError(errors.invalidValue('options.credentials', { apiId, apiSecret }))
     }
@@ -13,11 +13,14 @@ class OrderManager {
     if (typeof platform !== 'undefined' && Object.keys(platforms).map(key => platforms[key]).indexOf(platform) === -1) {
       throw generateError(errors.invalidValue('order.platform', platform))
     }
+    if (!Array.isArray(items)) {
+      throw generateError(errors.invalidValue('order.items', items))
+    }
     if (typeof pickupPlace !== 'undefined' && !isPlace(pickupPlace)) {
       throw generateError(errors.invalidValue('order.pickupPlace', pickupPlace))
     }
-    if (!Array.isArray(items)) {
-      throw generateError(errors.invalidValue('order.items', items))
+    if (typeof specialInstructions !== 'undefined' && (typeof specialInstructions !== 'string' || !specialInstructions)) {
+      throw generateError(errors.invalidValue('order.specialInstructions', specialInstructions))
     }
     if (typeof googleMapsAPIKey !== 'undefined' && (typeof googleMapsAPIKey !== 'string' || !googleMapsAPIKey)) {
       throw generateError(errors.invalidValue('options.googleMapsAPIKey', googleMapsAPIKey))
@@ -25,8 +28,57 @@ class OrderManager {
     this.apiToken = btoa(`${apiId}:${apiSecret}`)
     this.id = id
     this.platform = platform
+    this.items = items
     this.pickupPlace = pickupPlace || { getLocation: (options, cb) => cb(null) }
+    this.specialInstructions = specialInstructions
     this.googleMapsAPIKey = googleMapsAPIKey
+  }
+
+  calculateFee(latitude, longitude, cb) {
+    if (typeof latitude !== 'number' || latitude < -90 || latitude > 90) {
+      throw generateError(errors.invalidValue('order.location.latitude', latitude))
+    }
+    if (typeof longitude !== 'number' || longitude < -180 || longitude > 180) {
+      throw generateError(errors.invalidValue('order.location.longitude', longitude))
+    }
+    const { apiToken, items, pickupPlace, googleMapsAPIKey } = this
+    pickupPlace.getLocation({ googleMapsAPIKey, apiToken }, (error, pickupLocation) => {
+      if (error) return cb(error)
+      const url = new URL('http://staging.shippify.co')
+      url.pathname = '/task/fare'
+      const data = [
+        {
+          pickup_location: {
+            lat: pickupLocation.latitude,
+            lng: pickupLocation.longitude
+          },
+          delivery_location: {
+            lat: latitude,
+            lng: longitude,
+          },
+          items: items.map(item => ({
+            size: item.size,
+            qty: item.quantity
+          }))
+        }
+      ]
+      url.searchParams.append('data', JSON.stringify(data))
+      fetch(url, {
+        headers: {
+          'Authorization': `Basic ${apiToken}`,
+          'Content-Type': 'application/json',
+        }
+      })
+      .then(response => response.json())
+      .then(({ errFlag, errMsg, price, currency }) => {
+        if (errFlag === 0) {
+          return cb(null, { fee: price, currencySymbol: currency })
+        } else {
+          return cb(new Error(errFlag))
+        }
+      },
+      error => cb(error))
+    })
   }
 
   generateOrder({ contact, location: deliveryLocation, vehicleType, specialInstructions }, cb) {
@@ -43,7 +95,7 @@ class OrderManager {
     if (typeof email !== 'undefined' && (typeof email !== 'string' || !email)) {
       throw generateError(errors.invalidValue('order.contact.email', email))
     }
-    if (Object.keys(vehicleTypes).map(key => vehicleTypes[key]).indexOf(vehicleType) === -1) {
+    if (typeof vehicleType !== 'undefined' && Object.keys(vehicleTypes).map(key => vehicleTypes[key]).indexOf(vehicleType) === -1) {
       throw generateError(errors.invalidValue('options.vehicleType', vehicleType))
     }
     if (typeof specialInstructions !== 'undefined' && (typeof specialInstructions !== 'string' || !specialInstructions)) {
@@ -62,8 +114,8 @@ class OrderManager {
     if (typeof longitude !== 'number' || longitude < -180 || longitude > 180) {
       throw generateError(errors.invalidValue('order.location.longitude', longitude))
     }
-    const { apiToken, id, platform, pickupPlace, items } = this
-    pickupPlace.getLocation({ googleMapsAPIKey: this.googleMapsAPIKey }, (error, pickupLocation) => {
+    const { apiToken, id, platform, items, pickupPlace, specialInstructions: pickupInstructions, googleMapsAPIKey } = this
+    pickupPlace.getLocation({ googleMapsAPIKey, apiToken }, (error, pickupLocation) => {
       if (error) return cb(error)
       const order = {
         id,
@@ -71,7 +123,8 @@ class OrderManager {
         vehicleType,
         items,
         pickup: {
-          location: pickupLocation
+          location: pickupLocation,
+          specialInstructions: pickupInstructions,
         },
         delivery: {
           location: deliveryLocation,
@@ -90,10 +143,11 @@ class OrderManager {
         },
         body: JSON.stringify(body)
       })
-      .then(
-        response => cb(null, response.ok),
-        error => cb(error)
-      )
+      .then(response => response.json())
+      .then(json => {
+        if (json.code !== 'OK') return cb(json)
+        return cb(null, json.payload.order)
+      }, error => cb(error))
     })
   }
 }
