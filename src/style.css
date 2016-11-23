@@ -29,23 +29,23 @@
 }
 
 .shpy__form__address-icon {
-  mask-image: url(./images/place.svg);
+  mask-image: url(https://cdn.shippify.co/widget/place.svg);
 }
 
 .shpy__form__name-icon {
-  mask-image: url(./images/person.svg);
+  mask-image: url(https://cdn.shippify.co/widget/person.svg);
 }
 
 .shpy__form__email-icon {
-  mask-image: url(./images/person.svg);
+  mask-image: url(https://cdn.shippify.co/widget/person.svg);
 }
 
 .shpy__form__phone-icon {
-  mask-image: url(./images/call.svg);
+  mask-image: url(https://cdn.shippify.co/widget/call.svg);
 }
 
 .shpy__form__instructions-icon {
-  mask-image: url(./images/info-outline.svg);
+  mask-image: url(https://cdn.shippify.co/widget/info-outline.svg);
 }
 
 .shpy__form__input {
@@ -89,23 +89,23 @@ align-items: center;
 }
 
 .shpy__vehicle-bar__bike-option {
-  mask-image: url(./images/icon_v_bike.svg);
+  mask-image: url(https://cdn.shippify.co/widget/icon_v_bike.svg);
 }
 
 .shpy__vehicle-bar__moto-option {
-  mask-image: url(./images/icon_v_moto.svg);
+  mask-image: url(https://cdn.shippify.co/widget/icon_v_moto.svg);
 }
 
 .shpy__vehicle-bar__car-option {
-  mask-image: url(./images/icon_v_car.svg);
+  mask-image: url(https://cdn.shippify.co/widget/icon_v_car.svg);
 }
 
 .shpy__vehicle-bar__van-option {
-  mask-image: url(./images/icon_v_van.svg);
+  mask-image: url(https://cdn.shippify.co/widget/icon_v_van.svg);
 }
 
 .shpy__vehicle-bar__truck-option {
-  mask-image: url(./images/icon_v_truck.svg);
+  mask-image: url(https://cdn.shippify.co/widget/icon_v_truck.svg);
 }
 .shpy__footer{
   display: flex;
