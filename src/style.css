@@ -5,7 +5,7 @@
 }
 
 .shpy__form {
-  margin: 8px 0 8px 0;
+  margin: 8px 0 25px 0;
 }
 
 .shpy__form:first-child {
@@ -138,4 +138,86 @@ align-items: center;
   background-color: #c7c7c7;
   color: #333;
   cursor: auto;
+}
+
+/*////////////////////////////////////////////*/
+
+/* Tooltips helpers */
+
+.shpy__message_tooltip {
+    float: left;
+    top: 2px;
+    left: 7px;
+    position: relative;
+    z-index: 2;
+}
+
+.shpy__message_tooltip:hover {
+    z-index: 3;
+}
+
+.shpy__message_tooltip>span {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    font-size: 0.9em;
+    font-weight: bold;
+    text-align: center;
+    color: #FFF;
+    cursor: pointer;
+    background-color: red;
+    position: relative;
+    border-radius: 10px;
+}
+
+.shpy__message_tooltip .shpy__message_error {
+    opacity: 0;
+    width: 100px;
+    background-color: #333;
+    color: #FFF;
+    font-size: 0.9em;
+    position: absolute;
+    top: 0;
+    left: 20px;
+    padding: 8px;
+    border-radius: 6px;
+    pointer-events: none;
+    transition: 0.2s cubic-bezier(0.1, 0.1, 0.25, 2);
+    -webkit-transition: 0.3s cubic-bezier(0.1, 0.2, 0.5, 2.2);
+    -moz-transition: 0.3s cubic-bezier(0.1, 0.2, 0.5, 2.2);
+}
+
+.shpy__message_tooltip p {
+  margin: 2px;
+}
+
+.shpy__message_tooltip.down .shpy__message_error {
+    left: auto;
+    right: 0;
+    top: 30px;
+}
+
+.shpy__message_tooltip:hover .shpy__message_error {
+    opacity: 1;
+    left: 36px;
+}
+
+.shpy__message_tooltip .shpy__message_error b {
+    height: 0;
+    width: 0;
+    border-color: #333 #333 transparent transparent;
+    border-style: solid;
+    border-width: 9px 7px;
+    position: absolute;
+    left: -10px;
+    top: 8px;
+}
+
+.shpy__message_tooltip.down .shpy__message_error b {
+    left: auto;
+    right: 6px;
+    top: -10px;
+    border-width: 5px;
+    border-color: transparent #333 #333 transparent;
 }

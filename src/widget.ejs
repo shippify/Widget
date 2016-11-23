@@ -3,8 +3,10 @@
   <form>
     <div class="shpy__form">
       <div class="shpy__form__field">
+        <div class="shpy__message_tooltip"><span>!</span><div class="shpy__message_error"><b></b><p>need place!</p></div></div>
         <div class="shpy__form__icon shpy__form__address-icon"></div>
         <input id="shpy-delivery-address-input" class="shpy__form__input" type="text" placeholder="Insert delivery address"/>
+
       </div>
 
       <div class="shpy__form__field">
@@ -13,7 +15,7 @@
       </div>
       <% if (excludedFields.indexOf('email') === -1) { %>
       <div class="shpy__form__field">
-        <div class="shpy__form__icon shpy__form__email-icon"></div>
+        <div class="shpy__form__icon shpy__form__email-icon" ></div>
         <input id="shpy-delivery-contact-email-input" class="shpy__form__input" type="text" placeholder="Insert contact email"/>
       </div>
       <% } %>
