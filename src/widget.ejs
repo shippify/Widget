@@ -3,23 +3,25 @@
   <form>
     <div class="shpy__form">
       <div class="shpy__form__field">
-        <div class="shpy__message_tooltip"><span>!</span><div class="shpy__message_error"><b></b><p>need place!</p></div></div>
+        <div id="shpy-delivery-address-error" class="shpy__message_tooltip"><span>!</span><div class="shpy__message_error"><b></b><p>Needs a valid dropoff location</p></div></div>
         <div class="shpy__form__icon shpy__form__address-icon"></div>
         <input id="shpy-delivery-address-input" class="shpy__form__input" type="text" placeholder="Insert delivery address"/>
-
       </div>
 
       <div class="shpy__form__field">
+        <div id="shpy-contact-name-error" class="shpy__message_tooltip"><span>!</span><div class="shpy__message_error"><b></b><p>Must provide a name</p></div></div>
         <div class="shpy__form__icon shpy__form__name-icon"></div>
         <input id="shpy-delivery-contact-name-input" class="shpy__form__input" type="text" placeholder="Insert contact name"/>
       </div>
       <% if (excludedFields.indexOf('email') === -1) { %>
       <div class="shpy__form__field">
+        <div id="shpy-contact-email-error" class="shpy__message_tooltip"><span>!</span><div class="shpy__message_error"><b></b><p>Must provide an email address</p></div></div>
         <div class="shpy__form__icon shpy__form__email-icon" ></div>
         <input id="shpy-delivery-contact-email-input" class="shpy__form__input" type="text" placeholder="Insert contact email"/>
       </div>
       <% } %>
       <div class="shpy__form__field">
+        <div id="shpy-contact-phone-error" class="shpy__message_tooltip"><span>!</span><div class="shpy__message_error"><b></b><p>Must provide a valid phone number</p></div></div>
         <div class="shpy__form__icon shpy__form__phone-icon"></div>
         <input id="shpy-delivery-contact-phone-input" class="shpy__form__input" type="text" placeholder="Insert contact phone"/>
       </div>

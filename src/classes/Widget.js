@@ -32,6 +32,10 @@ class Widget {
     const contactEmailInput = document.getElementById('shpy-delivery-contact-email-input')
     const contactPhoneInput = document.getElementById('shpy-delivery-contact-phone-input')
     const specialInstructionsInput = document.getElementById('shpy-delivery-special_instructions-input')
+    const deliveryAddressErrorPrompt = document.getElementById('shpy-delivery-address-error')
+    const contactNameErrorPrompt = document.getElementById('shpy-contact-name-error')
+    const contactEmailErrorPrompt = document.getElementById('shpy-contact-email-error')
+    const contactPhoneErrorPrompt = document.getElementById('shpy-contact-phone-error')
     const orderButton = document.getElementById('shpy-order-button')
     const priceLabel = document.getElementById('shpy-price-label')
 
@@ -80,9 +84,11 @@ class Widget {
           if (error) {
             this.order.priceText = undefined
             priceLabel.innerHTML = ''
+            deliveryAddressErrorPrompt.classList.remove('shpy__message_tooltip--hidden')
           } else {
             this.order.priceText = `${receipt.currencySymbol} ${receipt.fee.toFixed(2)}`
             priceLabel.innerHTML = `${receipt.currencySymbol} ${receipt.fee.toFixed(2)}`
+            deliveryAddressErrorPrompt.classList.add('shpy__message_tooltip--hidden')
           }
           if (isOrderValid()) {
             orderButton.classList.remove('shpy__order-button--disabled')
@@ -114,9 +120,11 @@ class Widget {
               if (error) {
                 this.order.priceText = undefined
                 priceLabel.innerHTML = ''
+                deliveryAddressErrorPrompt.classList.remove('shpy__message_tooltip--hidden')
               } else {
                 this.order.priceText = `${receipt.currencySymbol} ${receipt.fee.toFixed(2)}`
                 priceLabel.innerHTML = `${receipt.currencySymbol} ${receipt.fee.toFixed(2)}`
+                deliveryAddressErrorPrompt.classList.add('shpy__message_tooltip--hidden')
               }
               if (isOrderValid()) {
                 orderButton.classList.remove('shpy__order-button--disabled')
@@ -128,7 +136,8 @@ class Widget {
         } else {
           this.order.priceText = undefined
           priceLabel.innerHTML = ''
-          orderButton.classList.remove('shpy__order-button--disabled')
+          orderButton.classList.add('shpy__order-button--disabled')
+          deliveryAddressErrorPrompt.classList.remove('shpy__message_tooltip--hidden')
         }
       })
     })
@@ -187,6 +196,11 @@ class Widget {
     })
     this.onContactNameChangeListener = contactNameInput.addEventListener('keyup', event => {
       this.order.contact.name = event.target.value ? event.target.value : undefined
+      if (event.target.value) {
+        contactNameErrorPrompt.classList.add('shpy__message_tooltip--hidden')
+      } else {
+        contactNameErrorPrompt.classList.remove('shpy__message_tooltip--hidden')
+      }
       if (isOrderValid()) {
         orderButton.classList.remove('shpy__order-button--disabled')
       } else {
@@ -196,10 +210,20 @@ class Widget {
     if (contactEmailInput) {
       this.onContactEmailChangeListener = contactEmailInput.addEventListener('keyup', event => {
         this.order.contact.email = event.target.value ? event.target.value : undefined
+        if (event.target.value) {
+          contactEmailErrorPrompt.classList.add('shpy__message_tooltip--hidden')
+        } else {
+          contactEmailErrorPrompt.classList.remove('shpy__message_tooltip--hidden')
+        }
       })
     }
     this.onContactPhoneChangeListener = contactPhoneInput.addEventListener('keyup', event => {
       this.order.contact.phone = event.target.value ? event.target.value : undefined
+      if (event.target.value) {
+        contactPhoneErrorPrompt.classList.add('shpy__message_tooltip--hidden')
+      } else {
+        contactPhoneErrorPrompt.classList.remove('shpy__message_tooltip--hidden')
+      }
       if (isOrderValid()) {
         orderButton.classList.remove('shpy__order-button--disabled')
       } else {

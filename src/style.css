@@ -152,6 +152,10 @@ align-items: center;
     z-index: 2;
 }
 
+.shpy__message_tooltip--hidden {
+  display: none;
+}
+
 .shpy__message_tooltip:hover {
     z-index: 3;
 }
