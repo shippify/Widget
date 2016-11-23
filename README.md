@@ -25,12 +25,12 @@ The widget is powered by the logic housed in the `OrderManager` class.
 To initialize a manager there must be a configuration set as:
 
 ```javscript
-  const widget = new window.shippify.integrations.OrderManager(orderTemplate, options) // DOMNode should be a DOM node container where the widget should be rendered.
+const orderManager = new window.shippify.integrations.OrderManager(orderTemplate, options) // DOMNode should be a DOM node container where the widget should be rendered.
 ```
 
 An order template is an object that represents the order's and its pickup information which contains the following keys:
 ```javascript
-{
+{ // Order template (object)
   id: "my-order-id", // The merchant supplied order id backed in their system. (string, non-empty),
   platform: "vtex", // Only if e-commerce uses a shippify-integrated platform. (enum:platform, string, optional)
   items: [ // List of items to be delivered. (array, non-empty)
@@ -45,7 +45,7 @@ An order template is an object that represents the order's and its pickup inform
 
 The OrderManager includes options as permissions and credentials provided by Shippify API and/or external sources.
 ```javascript
-{
+{ // Options (object)
   credentials: { // Shippify API credentials for your e-commerce. (object)
     apiId: "my-shippify-api-id", // (string, non-empty),
     apiSecret: "my-shippify-api-secret", // (string, non-empty),
@@ -64,3 +64,33 @@ The `Place` class conforms to the location protocol for Shippify Places. Differe
 
 ### Widget
 
+The `Widget` class is responsible for creating the UI for creating an order based on the client's dropoff information. Widget uses an `OrderManager` instance and renders the widget in a DOM node container.
+
+```javascript
+const widget = new window.shippify.integrations.Widget(orderManager, document.getElementById("my-shippify-widget"))
+```
+
+**Listening for order confirmation:**
+
+Add an event listener to get the order information at the moment of checkout like this:
+
+```javascript
+widget.addListener((error, order) => {
+  console.log(error)
+  console.log(order)
+})
+```
+
+**Destroy the widget**
+
+For deiniting the widget once the confirmation is successful only call `widget.destroy()`.
+
+## Platforms
+
+This section is only necessary if your e-commerce is using a sales platform which has integration with the Shippify API. At the moment Shippify has successfully integrated with the following platforms:
+
+```javascript
+window.shippify.integrations.platforms = {
+  VTEX, JUMPSELLER
+}
+```
