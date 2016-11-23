@@ -133,3 +133,9 @@ align-items: center;
   width: 170px;
   font-size: 20px;
 }
+
+.shpy__order-button--disabled {
+  background-color: #c7c7c7;
+  color: #333;
+  cursor: auto;
+}

@@ -23,6 +23,16 @@ class Widget {
     const { document, google } = window
     const mapContainer = document.getElementById('shpy-map-container')
     const deliveryLocationInput = document.getElementById('shpy-delivery-address-input')
+    const bikeButton = document.getElementById('shpy-bike-button')
+    const motoButton = document.getElementById('shpy-moto-button')
+    const carButton = document.getElementById('shpy-car-button')
+    const vanButton = document.getElementById('shpy-van-button')
+    const truckButton = document.getElementById('shpy-truck-button')
+    const contactNameInput = document.getElementById('shpy-delivery-contact-name-input')
+    const contactEmailInput = document.getElementById('shpy-delivery-contact-email-input')
+    const contactPhoneInput = document.getElementById('shpy-delivery-contact-phone-input')
+    const specialInstructionsInput = document.getElementById('shpy-delivery-special_instructions-input')
+    const orderButton = document.getElementById('shpy-order-button')
     const priceLabel = document.getElementById('shpy-price-label')
 
     const map = new google.maps.Map(mapContainer, {
@@ -32,6 +42,15 @@ class Widget {
     const searchBox = new google.maps.places.SearchBox(deliveryLocationInput)
     const marker = new google.maps.Marker({ map, draggable: true })
     const geocoder = new google.maps.Geocoder()
+
+    const isOrderValid = () => {
+      console.log(this.order)
+      if (!this.order.contact.name) return false
+      if (!this.order.contact.phone) return false
+      if (!this.order.location) return false
+      if (!this.order.priceText) return false
+      return true
+    }
 
     this.onMapBoundsChangeListener = map.addListener('idle', () => {
       searchBox.setBounds(map.getBounds())
@@ -48,6 +67,9 @@ class Widget {
         longitude: lng()
       }
       this.order.location = location
+      if (!isOrderValid()) {
+        orderButton.classList.add('shpy__order-button--disabled')
+      }
 
       map.setCenter(place.geometry.location)
       map.setZoom(13)
@@ -55,8 +77,18 @@ class Widget {
       if (priceLabel) {
         this.orderManager.calculateFee(location.latitude, location.longitude, (error, receipt) => {
           console.log(error)
-          if (error) return
-          priceLabel.innerHTML = `${receipt.currencySymbol} ${receipt.fee.toFixed(2)}`
+          if (error) {
+            this.order.priceText = undefined
+            priceLabel.innerHTML = ''
+          } else {
+            this.order.priceText = `${receipt.currencySymbol} ${receipt.fee.toFixed(2)}`
+            priceLabel.innerHTML = `${receipt.currencySymbol} ${receipt.fee.toFixed(2)}`
+          }
+          if (isOrderValid()) {
+            orderButton.classList.remove('shpy__order-button--disabled')
+          } else {
+            orderButton.classList.add('shpy__order-button--disabled')
+          }
         })
       }
     })
@@ -71,17 +103,32 @@ class Widget {
             longitude: lng()
           }
           this.order.location = location
+          if (!isOrderValid()) {
+            orderButton.classList.add('shpy__order-button--disabled')
+          }
           deliveryLocationInput.value = address
 
           if (priceLabel) {
             this.orderManager.calculateFee(location.latitude, location.longitude, (error, receipt) => {
               console.log(error)
-              if (error) return
-              priceLabel.innerHTML = `${receipt.currencySymbol} ${receipt.fee.toFixed(2)}`
+              if (error) {
+                this.order.priceText = undefined
+                priceLabel.innerHTML = ''
+              } else {
+                this.order.priceText = `${receipt.currencySymbol} ${receipt.fee.toFixed(2)}`
+                priceLabel.innerHTML = `${receipt.currencySymbol} ${receipt.fee.toFixed(2)}`
+              }
+              if (isOrderValid()) {
+                orderButton.classList.remove('shpy__order-button--disabled')
+              } else {
+                orderButton.classList.add('shpy__order-button--disabled')
+              }
             })
           }
         } else {
-          deliveryLocationInput.value = ''
+          this.order.priceText = undefined
+          priceLabel.innerHTML = ''
+          orderButton.classList.remove('shpy__order-button--disabled')
         }
       })
     })
@@ -89,17 +136,6 @@ class Widget {
     this.map = map
     this.searchBox = searchBox
     this.marker = marker
-
-    const bikeButton = document.getElementById('shpy-bike-button')
-    const motoButton = document.getElementById('shpy-moto-button')
-    const carButton = document.getElementById('shpy-car-button')
-    const vanButton = document.getElementById('shpy-van-button')
-    const truckButton = document.getElementById('shpy-truck-button')
-    const contactNameInput = document.getElementById('shpy-delivery-contact-name-input')
-    const contactEmailInput = document.getElementById('shpy-delivery-contact-email-input')
-    const contactPhoneInput = document.getElementById('shpy-delivery-contact-phone-input')
-    const specialInstructionsInput = document.getElementById('shpy-delivery-special_instructions-input')
-    const orderButton = document.getElementById('shpy-order-button')
 
     const deselectVehicleButtons = () => {
       bikeButton.classList.remove('shpy__vehicle-bar__option--selected')
@@ -151,6 +187,11 @@ class Widget {
     })
     this.onContactNameChangeListener = contactNameInput.addEventListener('keyup', event => {
       this.order.contact.name = event.target.value ? event.target.value : undefined
+      if (isOrderValid()) {
+        orderButton.classList.remove('shpy__order-button--disabled')
+      } else {
+        orderButton.classList.add('shpy__order-button--disabled')
+      }
     })
     if (contactEmailInput) {
       this.onContactEmailChangeListener = contactEmailInput.addEventListener('keyup', event => {
@@ -159,6 +200,11 @@ class Widget {
     }
     this.onContactPhoneChangeListener = contactPhoneInput.addEventListener('keyup', event => {
       this.order.contact.phone = event.target.value ? event.target.value : undefined
+      if (isOrderValid()) {
+        orderButton.classList.remove('shpy__order-button--disabled')
+      } else {
+        orderButton.classList.add('shpy__order-button--disabled')
+      }
     })
     this.onSpecialInstructionsChangeListener = specialInstructionsInput.addEventListener('keyup', event => {
       this.order.specialInstructions = event.target.value ? event.target.value : undefined
