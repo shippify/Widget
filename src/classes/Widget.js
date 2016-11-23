@@ -23,6 +23,7 @@ class Widget {
     const { document, google } = window
     const mapContainer = document.getElementById('shpy-map-container')
     const deliveryLocationInput = document.getElementById('shpy-delivery-address-input')
+    const priceLabel = document.getElementById('shpy-price-label')
 
     const map = new google.maps.Map(mapContainer, {
       center: {lat: -34.397, lng: 150.644},
@@ -51,11 +52,13 @@ class Widget {
       map.setCenter(place.geometry.location)
       map.setZoom(13)
       marker.setPosition(place.geometry.location)
-      this.orderManager.calculateFee(location.latitude, location.longitude, (error, receipt) => {
-        console.log(error)
-        if (error) return
-        console.log(receipt)
-      })
+      if (priceLabel) {
+        this.orderManager.calculateFee(location.latitude, location.longitude, (error, receipt) => {
+          console.log(error)
+          if (error) return
+          priceLabel.innerHTML = `${receipt.currencySymbol} ${receipt.fee.toFixed(2)}`
+        })
+      }
     })
     this.onMarkerPositionChangeListener = marker.addListener('dragend', () => {
       const position = marker.getPosition()
@@ -70,11 +73,13 @@ class Widget {
           this.order.location = location
           deliveryLocationInput.value = address
 
-          this.orderManager.calculateFee(location.latitude, location.longitude, (error, receipt) => {
-            console.log(error)
-            if (error) return
-            console.log(receipt)
-          })
+          if (priceLabel) {
+            this.orderManager.calculateFee(location.latitude, location.longitude, (error, receipt) => {
+              console.log(error)
+              if (error) return
+              priceLabel.innerHTML = `${receipt.currencySymbol} ${receipt.fee.toFixed(2)}`
+            })
+          }
         } else {
           deliveryLocationInput.value = ''
         }

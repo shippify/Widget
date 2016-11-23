@@ -4,7 +4,7 @@
     <div class="shpy__form">
       <div class="shpy__form__field">
         <div class="shpy__form__icon shpy__form__address-icon"></div>
-        <input id="shpy-delivery-address-input" class="shpy__form__input" type="text" placeholder="Insert delivery address" required/>
+        <input id="shpy-delivery-address-input" class="shpy__form__input" type="text" placeholder="Insert delivery address"/>
       </div>
 
       <div class="shpy__form__field">
@@ -37,8 +37,10 @@
     </div>
     <ul class="errorMessages"></ul>
     <div class="shpy__footer">
-      <div class="shpy__price" >USD <span>130.34</span></div>
-      <button id="shpy-order-button" class="shpy__order-button"> Order </button>
+      <% if (excludedFields.indexOf('price') === -1) { %>
+      <div id="shpy-price-label" class="shpy__price"></div>
+      <% } %>
+      <button id="shpy-order-button" class="shpy__order-button" type="button"> Order </button>
     </div>
   </form>
 </div>

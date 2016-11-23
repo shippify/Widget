@@ -133,6 +133,3 @@ align-items: center;
   width: 170px;
   font-size: 20px;
 }
-input:invalid {
-  box-shadow: 0 0 5px 1px red;
-}
