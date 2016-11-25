@@ -12,7 +12,7 @@ class Warehouse {
   getLocation({ apiToken } = {}, cb) {
     if (typeof apiToken !== 'string' || !apiToken) return cb(new Error('Must include shippify\'s API token.'))
     const { warehouseId } = this
-    const url = new URL('http://staging.shippify.co')
+    const url = new URL('https://api.shippify.co')
     url.pathname = `/depots/${warehouseId}`
     fetch(url, {
       headers: {

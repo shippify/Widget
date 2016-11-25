@@ -1,6 +1,6 @@
 <div class="shpy__widget">
   <div style="height: 150px;" id="shpy-map-container"></div>
-  <form>
+
     <div class="shpy__form">
       <div class="shpy__form__field">
         <div id="shpy-delivery-address-error" class="shpy__message_tooltip"><span>!</span><div class="shpy__message_error"><b></b><p>Needs a valid dropoff location</p></div></div>
@@ -17,13 +17,13 @@
       <div class="shpy__form__field">
         <div id="shpy-contact-email-error" class="shpy__message_tooltip"><span>!</span><div class="shpy__message_error"><b></b><p>Must provide an email address</p></div></div>
         <div class="shpy__form__icon shpy__form__email-icon" ></div>
-        <input id="shpy-delivery-contact-email-input" class="shpy__form__input" type="text" placeholder="Insert contact email"/>
+        <input id="shpy-delivery-contact-email-input" class="shpy__form__input" type="email" placeholder="Insert contact email"/>
       </div>
       <% } %>
       <div class="shpy__form__field">
         <div id="shpy-contact-phone-error" class="shpy__message_tooltip"><span>!</span><div class="shpy__message_error"><b></b><p>Must provide a valid phone number</p></div></div>
         <div class="shpy__form__icon shpy__form__phone-icon"></div>
-        <input id="shpy-delivery-contact-phone-input" class="shpy__form__input" type="text" placeholder="Insert contact phone"/>
+        <input id="shpy-delivery-contact-phone-input" class="shpy__form__input" type="phone" placeholder="Insert contact phone"/>
       </div>
 
       <div class="shpy__form__field">
@@ -46,5 +46,4 @@
       <% } %>
       <button id="shpy-order-button" class="shpy__order-button shpy__order-button--disabled" type="button"> Order </button>
     </div>
-  </form>
 </div>

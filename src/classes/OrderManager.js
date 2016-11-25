@@ -57,7 +57,7 @@ class OrderManager {
     const { apiToken, items, pickupPlace, googleMapsAPIKey } = this
     pickupPlace.getLocation({ googleMapsAPIKey, apiToken }, (error, pickupLocation) => {
       if (error) return cb(error)
-      const url = new URL('http://staging.shippify.co')
+      const url = new URL('https://api.shippify.co')
       url.pathname = '/task/fare'
       const data = [
         {
@@ -146,7 +146,7 @@ class OrderManager {
         },
         price: fixedPrice ? fixedPrice.fee : undefined
       }
-      const url = new URL('http://staging.shippify.co')
+      const url = new URL('https://api.shippify.co')
       url.pathname = '/orders'
       const body = { order }
       fetch(url, {

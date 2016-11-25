@@ -37,7 +37,7 @@
 }
 
 .shpy__form__email-icon {
-  mask-image: url(https://cdn.shippify.co/widget/person.svg);
+  mask-image: url(https://cdn.shippify.co/widget/mail.svg);
 }
 
 .shpy__form__phone-icon {
@@ -145,6 +145,9 @@ align-items: center;
 /* Tooltips helpers */
 
 .shpy__message_tooltip {
+
+    display: none;
+
     float: left;
     top: 2px;
     left: 7px;

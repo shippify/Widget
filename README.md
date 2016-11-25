@@ -7,11 +7,24 @@ You can choose to install the Hub Framework either manually, or through a depend
 
 ### Manually
 
-**Requirements to build:** node >= 4 & npm >= 3
-
 * Clone this repo.
 * Run `npm install`.
-* Run `npm run build`.
+
+## Building 
+
+### Requirements to build
+
+* node >= 4
+* npm >= 3
+
+**Sandbox**
+
+* Uncomment commented lines in src/index.js and fill with e-commerce specific information.
+* Run `npm start` at root directory. (If browser does not open automatically, open http://localhost:3000)
+
+**Production**
+
+* Run `npm run build` at root directory.
 * Drag assets generated from `/build` directory and add them to your `html` file.
 
 ## Getting started
