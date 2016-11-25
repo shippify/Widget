@@ -3,7 +3,7 @@ import { platforms, vehicleTypes } from './../constants'
 import errors, { generateError } from './../errors'
 
 class OrderManager {
-  constructor({ id, platform, pickupPlace, items, specialInstructions }, { credentials: { apiId, apiSecret }, googleMapsAPIKey }) {
+  constructor({ id, platform, pickupPlace, items, fixedPrice, specialInstructions }, { credentials: { apiId, apiSecret }, googleMapsAPIKey }) {
     if (typeof apiId !== 'string' || !apiId || typeof apiSecret !== 'string' || !apiSecret) {
       throw generateError(errors.invalidValue('options.credentials', { apiId, apiSecret }))
     }
@@ -13,11 +13,22 @@ class OrderManager {
     if (typeof platform !== 'undefined' && Object.keys(platforms).map(key => platforms[key]).indexOf(platform) === -1) {
       throw generateError(errors.invalidValue('order.platform', platform))
     }
-    if (!Array.isArray(items)) {
+    if (!Array.isArray(items) || !items.length) {
       throw generateError(errors.invalidValue('order.items', items))
     }
     if (typeof pickupPlace !== 'undefined' && !isPlace(pickupPlace)) {
       throw generateError(errors.invalidValue('order.pickupPlace', pickupPlace))
+    }
+    if (typeof fixedPrice !== 'undefined' && typeof fixedPrice !== 'object') {
+      throw generateError(errors.invalidValue('order.fixedPrice', fixedPrice))
+    }
+    if (typeof fixedPrice.fee !== 'number' || fixedPrice.fee<0) {
+      throw generateError(errors.invalidValue('order.fixedPrice.fee', fixedPrice.fee))
+    }
+    try {
+      Number(1).toLocaleString([], { currency: fixedPrice.currencyCode, style: 'currency' })
+    } catch (error) {
+      throw generateError(errors.invalidValue('order.fixedPrice.currencyCode', fixedPrice.currencyCode))
     }
     if (typeof specialInstructions !== 'undefined' && (typeof specialInstructions !== 'string' || !specialInstructions)) {
       throw generateError(errors.invalidValue('order.specialInstructions', specialInstructions))
@@ -32,6 +43,7 @@ class OrderManager {
     this.pickupPlace = pickupPlace || { getLocation: (options, cb) => cb(null) }
     this.specialInstructions = specialInstructions
     this.googleMapsAPIKey = googleMapsAPIKey
+    this.fixedPrice = fixedPrice
   }
 
   calculateFee(latitude, longitude, cb) {
@@ -41,6 +53,7 @@ class OrderManager {
     if (typeof longitude !== 'number' || longitude < -180 || longitude > 180) {
       throw generateError(errors.invalidValue('order.location.longitude', longitude))
     }
+    if (this.fixedPrice) return cb(null, Number(this.fixedPrice.fee).toLocaleString([], { currency: this.fixedPrice.currencyCode, style: 'currency' }))
     const { apiToken, items, pickupPlace, googleMapsAPIKey } = this
     pickupPlace.getLocation({ googleMapsAPIKey, apiToken }, (error, pickupLocation) => {
       if (error) return cb(error)
@@ -114,7 +127,7 @@ class OrderManager {
     if (typeof longitude !== 'number' || longitude < -180 || longitude > 180) {
       throw generateError(errors.invalidValue('order.location.longitude', longitude))
     }
-    const { apiToken, id, platform, items, pickupPlace, specialInstructions: pickupInstructions, googleMapsAPIKey } = this
+    const { apiToken, id, platform, items, fixedPrice, pickupPlace, specialInstructions: pickupInstructions, googleMapsAPIKey } = this
     pickupPlace.getLocation({ googleMapsAPIKey, apiToken }, (error, pickupLocation) => {
       if (error) return cb(error)
       const order = {
@@ -130,7 +143,8 @@ class OrderManager {
           location: deliveryLocation,
           contact,
           specialInstructions,
-        }
+        },
+        price: fixedPrice ? fixedPrice.fee : undefined
       }
       const url = new URL('http://staging.shippify.co')
       url.pathname = '/orders'

@@ -39,6 +39,13 @@ class Widget {
     const orderButton = document.getElementById('shpy-order-button')
     const priceLabel = document.getElementById('shpy-price-label')
 
+    if (priceLabel && this.orderManager.fixedPrice) {
+      const fixedPrice = Number(this.orderManager.fixedPrice.fee).toLocaleString([], { currency: this.orderManager.fixedPrice.currencyCode, style: 'currency' })
+      this.order.priceText = fixedPrice
+      priceLabel.innerHTML = fixedPrice
+      deliveryAddressErrorPrompt.classList.add('shpy__message_tooltip--hidden')
+    }
+
     const map = new google.maps.Map(mapContainer, {
       center: {lat: -34.397, lng: 150.644},
       zoom: 13
@@ -54,6 +61,15 @@ class Widget {
       if (!this.order.location) return false
       if (!this.order.priceText) return false
       return true
+    }
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
+        marker.setPosition({ lat: latitude, lng: longitude })
+        map.setCenter({ lat: latitude, lng: longitude })
+      }, error => console.log(error.code));
+    } else {
+      console.log('This browser does not support geolocation.');
     }
 
     this.onMapBoundsChangeListener = map.addListener('idle', () => {
@@ -85,9 +101,13 @@ class Widget {
             this.order.priceText = undefined
             priceLabel.innerHTML = ''
             deliveryAddressErrorPrompt.classList.remove('shpy__message_tooltip--hidden')
+          } else if (typeof receipt === 'string') {
+            this.order.priceText = receipt
+            priceLabel.innerHTML = receipt
+            deliveryAddressErrorPrompt.classList.add('shpy__message_tooltip--hidden')
           } else {
-            this.order.priceText = `${receipt.currencySymbol} ${receipt.fee.toFixed(2)}`
-            priceLabel.innerHTML = `${receipt.currencySymbol} ${receipt.fee.toFixed(2)}`
+            this.order.priceText = `${receipt.currencySymbol}${receipt.fee.toFixed(2)}`
+            priceLabel.innerHTML = `${receipt.currencySymbol}${receipt.fee.toFixed(2)}`
             deliveryAddressErrorPrompt.classList.add('shpy__message_tooltip--hidden')
           }
           if (isOrderValid()) {
@@ -121,6 +141,10 @@ class Widget {
                 this.order.priceText = undefined
                 priceLabel.innerHTML = ''
                 deliveryAddressErrorPrompt.classList.remove('shpy__message_tooltip--hidden')
+              } else if (typeof receipt === 'string') {
+                this.order.priceText = receipt
+                priceLabel.innerHTML = receipt
+                deliveryAddressErrorPrompt.classList.add('shpy__message_tooltip--hidden')
               } else {
                 this.order.priceText = `${receipt.currencySymbol} ${receipt.fee.toFixed(2)}`
                 priceLabel.innerHTML = `${receipt.currencySymbol} ${receipt.fee.toFixed(2)}`
