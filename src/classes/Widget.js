@@ -1,5 +1,6 @@
 import OrderManager from './OrderManager'
 import errors, { generateError } from './../errors'
+import translations, { messageIds } from './../translations'
 import widgetTemplate from './../widget.ejs'
 
 class Widget {
@@ -18,7 +19,10 @@ class Widget {
     this.order = {
       contact: {}
     }
-    this.node.innerHTML = widgetTemplate({ excludedFields })
+    const preferredLanguage = (navigator.languages && navigator.languages[0]) || navigator.language || navigator.userLanguage
+    const preferredLanguageTwoLetterCode = preferredLanguage.includes('-') ? preferredLanguage.split('-')[0] : preferredLanguage
+    const language = Object.keys(translations).indexOf(preferredLanguageTwoLetterCode) !== -1 ? preferredLanguageTwoLetterCode : 'en'
+    this.node.innerHTML = widgetTemplate({ excludedFields, messageIds, messages: translations[language] })
 
     const { document, google } = window
     const mapContainer = document.getElementById('shpy-map-container')

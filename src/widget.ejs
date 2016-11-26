@@ -3,35 +3,35 @@
 
     <div class="shpy__form">
       <div class="shpy__form__field">
-        <div id="shpy-delivery-address-error" class="shpy__message_tooltip shpy__message_tooltip--hidden"><span>!</span><div class="shpy__message_error"><b></b><p>Needs a valid dropoff location</p></div></div>
+        <div id="shpy-delivery-address-error" class="shpy__message_tooltip shpy__message_tooltip--hidden"><span>!</span><div class="shpy__message_error"><b></b><p><%= messages[messageIds.INVALID_DROPOFF_ADDRESS_PROMPT] %></p></div></div>
         <div class="shpy__form__icon shpy__form__address-icon"></div>
-        <input id="shpy-delivery-address-input" class="shpy__form__input" type="text" placeholder="Insert delivery address"/>
+        <input id="shpy-delivery-address-input" class="shpy__form__input" type="text" placeholder="<%= messages[messageIds.DROPOFF_ADDRESS_PLACEHOLDER] %>"/>
       </div>
 
       <div class="shpy__form__field">
-        <div id="shpy-contact-name-error" class="shpy__message_tooltip shpy__message_tooltip--hidden"><span>!</span><div class="shpy__message_error"><b></b><p>Must provide a name</p></div></div>
+        <div id="shpy-contact-name-error" class="shpy__message_tooltip shpy__message_tooltip--hidden"><span>!</span><div class="shpy__message_error"><b></b><p><%= messages[messageIds.INVALID_CLIENT_NAME_PROMPT] %></p></div></div>
         <div class="shpy__form__icon shpy__form__name-icon"></div>
-        <input id="shpy-delivery-contact-name-input" class="shpy__form__input" type="text" placeholder="Insert contact name"/>
+        <input id="shpy-delivery-contact-name-input" class="shpy__form__input" type="text" placeholder="<%= messages[messageIds.CLIENT_NAME_PLACEHOLDER] %>"/>
       </div>
       <% if (excludedFields.indexOf('email') === -1) { %>
       <div class="shpy__form__field">
-        <div id="shpy-contact-email-error" class="shpy__message_tooltip shpy__message_tooltip--hidden"><span>!</span><div class="shpy__message_error"><b></b><p>Must provide an email address</p></div></div>
+        <div id="shpy-contact-email-error" class="shpy__message_tooltip shpy__message_tooltip--hidden"><span>!</span><div class="shpy__message_error"><b></b><p><%= messages[messageIds.INVALID_CLIENT_EMAIL_PROMPT] %></p></div></div>
         <div class="shpy__form__icon shpy__form__email-icon" ></div>
-        <input id="shpy-delivery-contact-email-input" class="shpy__form__input" type="email" placeholder="Insert contact email"/>
+        <input id="shpy-delivery-contact-email-input" class="shpy__form__input" type="email" placeholder="<%= messages[messageIds.CLIENT_EMAIL_PLACEHOLDER] %>"/>
       </div>
       <% } %>
       <div class="shpy__form__field">
-        <div id="shpy-contact-phone-error" class="shpy__message_tooltip shpy__message_tooltip--hidden"><span>!</span><div class="shpy__message_error"><b></b><p>Must provide a valid phone number</p></div></div>
+        <div id="shpy-contact-phone-error" class="shpy__message_tooltip shpy__message_tooltip--hidden"><span>!</span><div class="shpy__message_error"><b></b><p><%= messages[messageIds.INVALID_CLIENT_PHONE_PROMPT] %></p></div></div>
         <div class="shpy__form__icon shpy__form__phone-icon"></div>
-        <input id="shpy-delivery-contact-phone-input" class="shpy__form__input" type="phone" placeholder="Insert contact phone"/>
+        <input id="shpy-delivery-contact-phone-input" class="shpy__form__input" type="phone" placeholder="<%= messages[messageIds.CLIENT_PHONE_PLACEHOLDER] %>"/>
       </div>
 
       <div class="shpy__form__field">
         <div class="shpy__form__icon shpy__form__instructions-icon"></div>
-        <input id="shpy-delivery-special_instructions-input" class="shpy__form__input" type="text" placeholder="Insert special instructions"/>
+        <input id="shpy-delivery-special_instructions-input" class="shpy__form__input" type="text" placeholder="<%= messages[messageIds.SPECIAL_INSTRUCTIONS_PLACEHOLDER] %>"/>
       </div>
     </div>
-    <span style="justify-content:center;display: flex;; font-family: Roboto; color: #757575">¿Dónde puede caber tu paquete?</span>
+    <span style="justify-content:center;display: flex;; font-family: Roboto; color: #757575"><%= messages[messageIds.VEHICLE_TYPES_LABEL] %></span>
     <div class="shpy__vehicle-bar">
       <button id="shpy-bike-button" class="shpy__vehicle-bar__option shpy__vehicle-bar__bike-option" data-vehicle-type="bike"></button>
       <button id="shpy-moto-button" class="shpy__vehicle-bar__option shpy__vehicle-bar__moto-option" data-vehicle-type="moto"></button>
@@ -44,6 +44,6 @@
       <% if (excludedFields.indexOf('price') === -1) { %>
       <div id="shpy-price-label" class="shpy__price"></div>
       <% } %>
-      <button id="shpy-order-button" class="shpy__order-button shpy__order-button--disabled" type="button"> Order </button>
+      <button id="shpy-order-button" class="shpy__order-button shpy__order-button--disabled" type="button"><%= messages[messageIds.ORDER_BUTTON_TITLE] %></button>
     </div>
 </div>
