@@ -8,7 +8,15 @@ You can choose to install the Shippify UI Widget either manually, or through a d
 ### Manually
 
 * Clone this repo.
+* Go inside project directory
 * Run `npm install`.
+
+```bash
+# Go to directory where project should be cloned
+git clone https://github.com/shippify/Widget.git
+cd Widget
+npm install
+```
 
 ## Building 
 
@@ -22,10 +30,20 @@ You can choose to install the Shippify UI Widget either manually, or through a d
 * Uncomment commented lines in src/index.js and fill with e-commerce specific information.
 * Run `npm start` at root directory. (If browser does not open automatically, open http://localhost:3000)
 
+```bash
+# Inside project directory
+npm start
+```
+
 **Production**
 
 * Run `npm run build` at root directory.
 * Drag assets generated from `/build` directory and add them to your `html` file.
+
+```bash
+# Inside project directory
+npm run build
+```
 
 ## Getting started
 
