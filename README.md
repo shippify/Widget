@@ -3,7 +3,7 @@
 Shippify UI Widget for companies and plaforms - a toolkit for implementing Shippify's Last Mile Delivery API on the web through a friendly UI. It is designed to enable e-commerces of any size to quickly create, and dispatch orders, at checkout, to Shippify and confirm them for delivery the moment it is needed. It also makes it easy to customize the style files that render the widget and adjust them to e-commerces' personal needs.
 
 ## Installation
-You can choose to install the Hub Framework either manually, or through a dependency manager (coming soon).
+You can choose to install the Shippify UI Widget either manually, or through a dependency manager (coming soon).
 
 ### Manually
 
