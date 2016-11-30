@@ -13,7 +13,7 @@ class Warehouse {
     if (typeof apiToken !== 'string' || !apiToken) return cb(new Error('Must include shippify\'s API token.'))
     const { warehouseId } = this
     const url = new URL('https://api.shippify.co')
-    url.pathname = `/depots/${warehouseId}`
+    url.pathname = `/warehouses/${warehouseId}/id`
     fetch(url, {
       headers: {
         'Authorization': `Basic ${apiToken}`,
