@@ -153,7 +153,7 @@ class OrderManager {
         return response.json()
         .then(json => {
           console.log(json)
-          if (json.code === 'OK') return cb(null, json.payload.order)
+          if (json.code === 'OK') return cb(null, { order: { id, href: `https://api.shippify.co/orders/${id}` }})
           else return cb(generateError(errors.unknownError(new Error(json.code))))
         })
       }, error => cb(generateError(errors.unknownError(error))))
