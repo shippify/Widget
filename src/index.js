@@ -42,8 +42,3 @@ window.shippify = {
 //
 // const shippifyWidgetContainer = document.getElementById('root')
 // const widget = new shippify.integrations.Widget(orderManager, shippifyWidgetContainer)
-//
-// widget.addListener((error, order) => {
-//   console.log(error)
-//   console.log(order)
-// })

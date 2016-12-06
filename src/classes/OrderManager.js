@@ -19,16 +19,17 @@ class OrderManager {
     if (typeof pickupPlace !== 'undefined' && !isPlace(pickupPlace)) {
       throw generateError(errors.invalidValue('order.pickupPlace', pickupPlace))
     }
-    if (typeof fixedPrice !== 'undefined' && typeof fixedPrice !== 'object') {
-      throw generateError(errors.invalidValue('order.fixedPrice', fixedPrice))
-    }
-    if (typeof fixedPrice.fee !== 'number' || fixedPrice.fee<0) {
-      throw generateError(errors.invalidValue('order.fixedPrice.fee', fixedPrice.fee))
-    }
-    try {
-      Number(1).toLocaleString([], { currency: fixedPrice.currencyCode, style: 'currency' })
-    } catch (error) {
-      throw generateError(errors.invalidValue('order.fixedPrice.currencyCode', fixedPrice.currencyCode))
+    if (typeof fixedPrice !== 'undefined') {
+      if (typeof fixedPrice !== 'object') {
+        throw generateError(errors.invalidValue('order.fixedPrice', fixedPrice))
+      } else if (typeof fixedPrice.value !== 'number' || fixedPrice.value < 0) {
+        throw generateError(errors.invalidValue('order.fixedPrice.value', fixedPrice.value))
+      }
+      try {
+        Number(1).toLocaleString([], { currency: fixedPrice.currencyCode, style: 'currency' })
+      } catch (error) {
+        throw generateError(errors.invalidValue('order.fixedPrice.currencyCode', fixedPrice.currencyCode))
+      }
     }
     if (typeof specialInstructions !== 'undefined' && (typeof specialInstructions !== 'string' || !specialInstructions)) {
       throw generateError(errors.invalidValue('order.specialInstructions', specialInstructions))
@@ -46,14 +47,14 @@ class OrderManager {
     this.fixedPrice = fixedPrice
   }
 
-  calculateFee(latitude, longitude, cb) {
+  calculatePrice(latitude, longitude, cb) {
     if (typeof latitude !== 'number' || latitude < -90 || latitude > 90) {
       throw generateError(errors.invalidValue('order.location.latitude', latitude))
     }
     if (typeof longitude !== 'number' || longitude < -180 || longitude > 180) {
       throw generateError(errors.invalidValue('order.location.longitude', longitude))
     }
-    if (this.fixedPrice) return cb(null, Number(this.fixedPrice.fee).toLocaleString([], { currency: this.fixedPrice.currencyCode, style: 'currency' }))
+    if (this.fixedPrice) return cb(null, Number(this.fixedPrice.value).toLocaleString([], { currency: this.fixedPrice.currencyCode, style: 'currency' }))
     const { apiToken, items, pickupPlace, googleMapsAPIKey } = this
     pickupPlace.getLocation({ googleMapsAPIKey, apiToken }, (error, pickupLocation) => {
       if (error) return cb(error)
@@ -85,7 +86,7 @@ class OrderManager {
       .then(response => response.json())
       .then(({ errFlag, errMsg, price, currency }) => {
         if (errFlag === 0) {
-          return cb(null, { fee: price, currencySymbol: currency })
+          return cb(null, { value: price, currencySymbol: currency })
         } else {
           return cb(new Error(errFlag))
         }
@@ -95,38 +96,28 @@ class OrderManager {
   }
 
   generateOrder({ contact, location: deliveryLocation, vehicleType, specialInstructions }, cb) {
-    if (typeof contact !== 'object' || contact === null) {
-      throw generateError(errors.invalidValue('order.contact', contact))
-    }
+    if (typeof contact !== 'object' || contact === null) return cb(generateError(errors.invalidValue('order.contact', contact)))
+
     const { name, email, phone } = contact
-    if (typeof name !== 'string' || !name) {
-      throw generateError(errors.invalidValue('order.contact.name', name))
-    }
-    if (typeof phone !== 'string' || !phone) {
-      throw generateError(errors.invalidValue('order.contact.phone', phone))
-    }
-    if (typeof email !== 'undefined' && (typeof email !== 'string' || !email)) {
-      throw generateError(errors.invalidValue('order.contact.email', email))
-    }
-    if (typeof vehicleType !== 'undefined' && Object.keys(vehicleTypes).map(key => vehicleTypes[key]).indexOf(vehicleType) === -1) {
-      throw generateError(errors.invalidValue('options.vehicleType', vehicleType))
-    }
-    if (typeof specialInstructions !== 'undefined' && (typeof specialInstructions !== 'string' || !specialInstructions)) {
-      throw generateError(errors.invalidValue('order.specialInstructions', specialInstructions))
-    }
-    if (typeof location !== 'object' || location === null) {
-      throw generateError(errors.invalidValue('order.location', location))
-    }
+    if (typeof name !== 'string' || !name) return cb(generateError(errors.invalidValue('order.contact.name', name)))
+
+    if (typeof phone !== 'string' || !phone) return cb(generateError(errors.invalidValue('order.contact.phone', phone)))
+
+    if (typeof email !== 'undefined' && (typeof email !== 'string' || !email)) return cb(generateError(errors.invalidValue('order.contact.email', email)))
+
+    if (typeof vehicleType !== 'undefined' && Object.keys(vehicleTypes).map(key => vehicleTypes[key]).indexOf(vehicleType) === -1) return cb(generateError(errors.invalidValue('options.vehicleType', vehicleType)))
+
+    if (typeof specialInstructions !== 'undefined' && (typeof specialInstructions !== 'string' || !specialInstructions)) return cb(generateError(errors.invalidValue('order.specialInstructions', specialInstructions)))
+
+    if (typeof deliveryLocation !== 'object' || deliveryLocation === null) return cb(generateError(errors.invalidValue('order.location', deliveryLocation)))
+
     const { address, latitude, longitude } = deliveryLocation
-    if (typeof address !== 'string' || !address) {
-      throw generateError(errors.invalidValue('order.location.address', address))
-    }
-    if (typeof latitude !== 'number' || latitude < -90 || latitude > 90) {
-      throw generateError(errors.invalidValue('order.location.latitude', latitude))
-    }
-    if (typeof longitude !== 'number' || longitude < -180 || longitude > 180) {
-      throw generateError(errors.invalidValue('order.location.longitude', longitude))
-    }
+    if (typeof address !== 'string' || !address) return cb(generateError(errors.invalidValue('order.location.address', address)))
+
+    if (typeof latitude !== 'number' || latitude < -90 || latitude > 90) return cb(generateError(errors.invalidValue('order.location.latitude', latitude)))
+
+    if (typeof longitude !== 'number' || longitude < -180 || longitude > 180) return cb(generateError(errors.invalidValue('order.location.longitude', longitude)))
+
     const { apiToken, id, platform, items, fixedPrice, pickupPlace, specialInstructions: pickupInstructions, googleMapsAPIKey } = this
     pickupPlace.getLocation({ googleMapsAPIKey, apiToken }, (error, pickupLocation) => {
       if (error) return cb(error)
@@ -144,7 +135,7 @@ class OrderManager {
           contact,
           specialInstructions,
         },
-        price: fixedPrice ? fixedPrice.fee : undefined
+        price: fixedPrice ? fixedPrice.value : undefined
       }
       const url = new URL('https://api.shippify.co')
       url.pathname = '/orders'
@@ -157,11 +148,15 @@ class OrderManager {
         },
         body: JSON.stringify(body)
       })
-      .then(response => response.json())
-      .then(json => {
-        if (json.code !== 'OK') return cb(json)
-        return cb(null, json.payload.order)
-      }, error => cb(error))
+      .then(response => {
+        if (response.status === 401) return cb(generateError(errors.unauthenticated()))
+        return response.json()
+        .then(json => {
+          console.log(json)
+          if (json.code === 'OK') return cb(null, json.payload.order)
+          else return cb(generateError(errors.unknownError(new Error(json.code))))
+        })
+      }, error => cb(generateError(errors.unknownError(error))))
     })
   }
 }

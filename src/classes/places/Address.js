@@ -24,9 +24,9 @@ class Address {
         const { formatted_address: address, geometry: { location: { lat, lng } } } = results[0]
         cb(null, { latitude: lat, longitude: lng, address })
       } else {
-        cb(new Error(status))
+        cb(generateError(errors.geocodingFailure(new Error(status))))
       }
-    }, error => cb(error))
+    }, error => cb(generateError(errors.unknownError(error))))
   }
 }
 

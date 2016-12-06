@@ -25,10 +25,10 @@ class Warehouse {
       if (code === 'OK') {
         const { latitude, longitude, address } = payload.data.depot.location
         cb(null, { latitude, longitude, address })
-      } else {
-        cb(new Error(code))
-      }
-    }, error => cb(error))
+      } else if (code === 'AU') return cb(generateError(errors.unauthenticated()))
+      else if (code === 'AX' || code === 'NR') return cb(generateError(errors.unauthenticated()))
+      else return cb(generateError(errors.unknownError()))
+    }, error => cb(generateError(errors.unknownError(error))))
   }
 }
 

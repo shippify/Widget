@@ -40,37 +40,44 @@ class Widget {
     const contactNameErrorPrompt = document.getElementById('shpy-contact-name-error')
     const contactEmailErrorPrompt = document.getElementById('shpy-contact-email-error')
     const contactPhoneErrorPrompt = document.getElementById('shpy-contact-phone-error')
-    const orderButton = document.getElementById('shpy-order-button')
-    const priceLabel = document.getElementById('shpy-price-label')
-
-    if (priceLabel && this.orderManager.fixedPrice) {
-      const fixedPrice = Number(this.orderManager.fixedPrice.fee).toLocaleString([], { currency: this.orderManager.fixedPrice.currencyCode, style: 'currency' })
-      this.order.priceText = fixedPrice
-      priceLabel.innerHTML = fixedPrice
-      deliveryAddressErrorPrompt.classList.add('shpy__message_tooltip--hidden')
-    }
 
     const map = new google.maps.Map(mapContainer, {
       center: {lat: -34.397, lng: 150.644},
-      zoom: 13
+      zoom: 15
     })
     const searchBox = new google.maps.places.SearchBox(deliveryLocationInput)
     const marker = new google.maps.Marker({ map, draggable: true })
     const geocoder = new google.maps.Geocoder()
 
-    const isOrderValid = () => {
-      console.log(this.order)
-      if (!this.order.contact.name) return false
-      if (!this.order.contact.phone) return false
-      if (!this.order.location) return false
-      if (!this.order.priceText) return false
-      return true
-    }
+    // const isOrderValid = order => {
+    //   console.log(order)
+    //   if (!order.contact.name) return false
+    //   if (!order.contact.phone) return false
+    //   if (!order.location) return false
+    //   if (!order.priceText) return false
+    //   return true
+    // }
 
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
-        marker.setPosition({ lat: latitude, lng: longitude })
-        map.setCenter({ lat: latitude, lng: longitude })
+        const position = { lat: latitude, lng: longitude }
+        marker.setPosition(position)
+        map.setCenter(position)
+        geocoder.geocode({ location: position }, (results, status) => {
+          if (status === google.maps.GeocoderStatus.OK) {
+            const { formatted_address: address, geometry: { location: { lat, lng } } } = results[0]
+            const location = {
+              address,
+              latitude: lat(),
+              longitude: lng()
+            }
+            this.order.location = location
+            deliveryLocationInput.value = address
+          } else {
+            this.order.location = null
+            deliveryLocationInput.value = ''
+          }
+        })
       }, error => console.log(error.code));
     } else {
       console.log('This browser does not support geolocation.');
@@ -91,36 +98,10 @@ class Widget {
         longitude: lng()
       }
       this.order.location = location
-      if (!isOrderValid()) {
-        orderButton.classList.add('shpy__order-button--disabled')
-      }
 
       map.setCenter(place.geometry.location)
-      map.setZoom(13)
+      map.setZoom(15)
       marker.setPosition(place.geometry.location)
-      if (priceLabel) {
-        this.orderManager.calculateFee(location.latitude, location.longitude, (error, receipt) => {
-          console.log(error)
-          if (error) {
-            this.order.priceText = undefined
-            priceLabel.innerHTML = ''
-            deliveryAddressErrorPrompt.classList.remove('shpy__message_tooltip--hidden')
-          } else if (typeof receipt === 'string') {
-            this.order.priceText = receipt
-            priceLabel.innerHTML = receipt
-            deliveryAddressErrorPrompt.classList.add('shpy__message_tooltip--hidden')
-          } else {
-            this.order.priceText = `${receipt.currencySymbol}${receipt.fee.toFixed(2)}`
-            priceLabel.innerHTML = `${receipt.currencySymbol}${receipt.fee.toFixed(2)}`
-            deliveryAddressErrorPrompt.classList.add('shpy__message_tooltip--hidden')
-          }
-          if (isOrderValid()) {
-            orderButton.classList.remove('shpy__order-button--disabled')
-          } else {
-            orderButton.classList.add('shpy__order-button--disabled')
-          }
-        })
-      }
     })
     this.onMarkerPositionChangeListener = marker.addListener('dragend', () => {
       const position = marker.getPosition()
@@ -133,39 +114,10 @@ class Widget {
             longitude: lng()
           }
           this.order.location = location
-          if (!isOrderValid()) {
-            orderButton.classList.add('shpy__order-button--disabled')
-          }
           deliveryLocationInput.value = address
-
-          if (priceLabel) {
-            this.orderManager.calculateFee(location.latitude, location.longitude, (error, receipt) => {
-              console.log(error)
-              if (error) {
-                this.order.priceText = undefined
-                priceLabel.innerHTML = ''
-                deliveryAddressErrorPrompt.classList.remove('shpy__message_tooltip--hidden')
-              } else if (typeof receipt === 'string') {
-                this.order.priceText = receipt
-                priceLabel.innerHTML = receipt
-                deliveryAddressErrorPrompt.classList.add('shpy__message_tooltip--hidden')
-              } else {
-                this.order.priceText = `${receipt.currencySymbol} ${receipt.fee.toFixed(2)}`
-                priceLabel.innerHTML = `${receipt.currencySymbol} ${receipt.fee.toFixed(2)}`
-                deliveryAddressErrorPrompt.classList.add('shpy__message_tooltip--hidden')
-              }
-              if (isOrderValid()) {
-                orderButton.classList.remove('shpy__order-button--disabled')
-              } else {
-                orderButton.classList.add('shpy__order-button--disabled')
-              }
-            })
-          }
         } else {
-          this.order.priceText = undefined
-          priceLabel.innerHTML = ''
-          orderButton.classList.add('shpy__order-button--disabled')
-          deliveryAddressErrorPrompt.classList.remove('shpy__message_tooltip--hidden')
+          this.order.location = null
+          deliveryLocationInput.value = ''
         }
       })
     })
@@ -229,11 +181,6 @@ class Widget {
       } else {
         contactNameErrorPrompt.classList.remove('shpy__message_tooltip--hidden')
       }
-      if (isOrderValid()) {
-        orderButton.classList.remove('shpy__order-button--disabled')
-      } else {
-        orderButton.classList.add('shpy__order-button--disabled')
-      }
     })
     if (contactEmailInput) {
       this.onContactEmailChangeListener = contactEmailInput.addEventListener('keyup', event => {
@@ -252,34 +199,17 @@ class Widget {
       } else {
         contactPhoneErrorPrompt.classList.remove('shpy__message_tooltip--hidden')
       }
-      if (isOrderValid()) {
-        orderButton.classList.remove('shpy__order-button--disabled')
-      } else {
-        orderButton.classList.add('shpy__order-button--disabled')
-      }
     })
     this.onSpecialInstructionsChangeListener = specialInstructionsInput.addEventListener('keyup', event => {
       this.order.specialInstructions = event.target.value ? event.target.value : undefined
     })
-    this.onOrderButtonClickListener = orderButton.addEventListener('click', () => {
-      try {
-        this.orderManager.generateOrder(this.order, (error, order) => {
-          this.listeners.forEach(listener => listener(error, order))
-        })
-      } catch (error) {
-        this.listeners.forEach(listener => listener(error))
-      }
-    })
-
-    this.listeners = []
   }
 
-  addListener(listener) {
-    this.listeners.push(listener)
+  generateOrder(cb) {
+    this.orderManager.generateOrder(this.order, cb);
   }
 
   destroy() {
-    this.listeners = []
     this.order = null
 
     this.onSearchBoxPlaceChangeListener.remove()
@@ -318,7 +248,7 @@ class Widget {
 
     this.node.innerHTML = ''
 
-    this.orderManager = null
+    // this.orderManager = null
   }
 }
 
