@@ -1,6 +1,6 @@
 import Widget from './classes/Widget'
 import OrderManager from './classes/OrderManager'
-import { Address, LatLng, Warehouse } from './classes/places'
+import { Address, LatLng, Warehouse, FullLocation } from './classes/places'
 import { platforms, vehicleTypes } from './constants'
 import errors from './errors'
 
@@ -13,6 +13,7 @@ window.shippify = {
     Address,
     LatLng,
     Warehouse,
+    FullLocation,
   },
   integrations: {
     platforms,

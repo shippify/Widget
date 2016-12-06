@@ -18,7 +18,7 @@ cd Widget
 npm install
 ```
 
-## Building 
+## Building
 
 ### Requirements to build
 
@@ -50,7 +50,7 @@ The widget is powered by the logic housed in the `OrderManager` class.
 To initialize a manager there must be a configuration set as:
 
 ```javscript
-const orderManager = new window.shippify.integrations.OrderManager(orderTemplate, options) // DOMNode should be a DOM node container where the widget should be rendered.
+const orderManager = new shippify.integrations.OrderManager(orderTemplate, options) // DOMNode should be a DOM node container where the widget should be rendered.
 ```
 
 An order template is an object that represents the order's and its pickup information which contains the following keys:
@@ -63,7 +63,7 @@ An order template is an object that represents the order's and its pickup inform
     size: 2, // (enum:packageSize, integer),
     quantity: 10 // (integer, gte-1)
   ],
-  pickupPlace: new window.shippify.places.Address("Rua Curitiba - Lourdes, Belo Horizonte - State of Minas Gerais, Brazil"), // Business or pickup location. (class:Place, object, optional)
+  pickupPlace: new shippify.places.Address("Rua Curitiba - Lourdes, Belo Horizonte - State of Minas Gerais, Brazil"), // Business or pickup location. (class:Place, object, optional)
   specialInstructions: "Ring the bell for apartment 2B, ask for Carol.", // In-app instructions for your business's location for the courier. (string, optional)
   fixedPrice: { // Set a fixed shipping price (object, optional)
     value: 3.14, // (float, gte-1),
@@ -87,16 +87,17 @@ The OrderManager includes options as permissions and credentials provided by Shi
 
 The `Place` class conforms to the location protocol for Shippify Places. Different options allow the user to represent their locations in an easy way. Places can be:
 
-* Physical addresses can be included as `window.shippify.places.Address("Rua Curitiba - Lourdes, Belo Horizonte - State of Minas Gerais, Brazil")`
-* Coordinates as `window.shippify.places.LatLng(-19.929416, -43.944240)`
-* Warehouses or depots added to the Shippify platform to your business can be represented using their issued id as `window.shippify.places.Warehouse(777)`
+* Physical addresses can be included as `shippify.places.Address("Rua Curitiba - Lourdes, Belo Horizonte - State of Minas Gerais, Brazil")`
+* Coordinates as `shippify.places.LatLng(-19.929416, -43.944240)`
+* Warehouses or depots added to the Shippify platform to your business can be represented using their issued id as `shippify.places.Warehouse(777)`
+* FullLocation assumes you know your exact coordinates and address, can be both geocoded via Google Maps API. If so, just go ahead and use as `shippify.places.FullLocation("Rua Curitiba - Lourdes, Belo Horizonte - State of Minas Gerais, Brazil", -19.929416, -43.944240)`
 
 ### Widget
 
 The `Widget` class is responsible for creating the UI for creating an order based on the client's dropoff information. Widget uses an `OrderManager` instance and renders the widget in a DOM node container.
 
 ```javascript
-const widget = new window.shippify.integrations.Widget(orderManager, document.getElementById("my-shippify-widget"))
+const widget = new shippify.integrations.Widget(orderManager, document.getElementById("my-shippify-widget"))
 ```
 
 **Confirming an order:**
@@ -147,7 +148,7 @@ npm run build
 This section is only necessary if your e-commerce is using a sales platform which has integration with the Shippify API. At the moment Shippify has successfully integrated with the following platforms:
 
 ```javascript
-window.shippify.integrations.platforms = {
+shippify.integrations.platforms = {
   VTEX, JUMPSELLER
 }
 ```
