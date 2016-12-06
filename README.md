@@ -3,7 +3,50 @@
 Shippify UI Widget for companies and plaforms - a toolkit for implementing Shippify's Last Mile Delivery API on the web through a friendly UI. It is designed to enable e-commerces of any size to quickly create, and dispatch orders, at checkout, to Shippify and confirm them for delivery the moment it is needed. It also makes it easy to customize the style files that render the widget and adjust them to e-commerces' personal needs.
 
 ## Installation
-You can choose to install the Shippify UI Widget either manually, or through a dependency manager (coming soon).
+You can choose to install the Shippify UI Widget either through a CDN, manually, or through a dependency manager (coming soon).
+
+### CDN
+
+Using Shippify's own CDN is the fastest and easiest way to insert the widget functionality directly to your webpage.
+
+To test it just copy this snippet into an `html` file.
+
+```html
+<html>
+  <head>
+    <script type="text/javascript" src="https://cdn.shippify.co/widget/1.0.0/index.min.js"></script>
+  </head>
+  <body>
+    <div id="my-shippify-widget"></div>
+    <script type="text/javascript">
+      const pickupPlace = new shippify.places.Address('Av. 9 de Octubre, Guayaquil, EC')
+      const orderTemplate = {
+        id: 'my-platform-reference-id',
+        platform: shippify.integrations.platforms.VTEX,
+        pickupPlace,
+        items: [
+          { name: 'Dog', size: 3, quantity: 10 }
+        ],
+        fixedPrice: {
+          value: 3.14,
+          currencyCode: 'USD'
+        }
+      }
+      const orderManagerOptions = {
+        credentials: {
+          apiId: 'my-shippify-api-id',
+          apiSecret: 'my-shippify-api-secret'
+        },
+        // googleMapsAPIKey: 'my-google-maps-api-key'
+      }
+      const orderManager = new shippify.integrations.OrderManager(orderTemplate, orderManagerOptions)
+
+     const shippifyWidgetContainer = document.getElementById('my-shippify-widget')
+     const widget = new shippify.integrations.Widget(orderManager, shippifyWidgetContainer)
+    </script>
+  </body>
+</html>
+```
 
 ### Manually
 
@@ -39,7 +82,7 @@ The approach of hot-module reloading (HMR) allows a fast and safe experience at 
 npm start
 ```
 
-## Getting started
+## API
 
 To enable you to quickly get started using the Shippify UI Widget, we've created a simple API to render the widget in your webpage with a few options.
 
