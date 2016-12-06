@@ -166,3 +166,7 @@ These errors have `code`, `message` properties to identify the error and its des
 |`geocoding_failure`|Shippify uses Google Maps API to geocode addresses and coordinates provided. If specifying a warehouse id from Shippify provokes this error, then such id is invalid.|
 |`unauthenticated`|The Shippify API credentials provided are missing, or incorrect.|
 |`unknown_error`|An unknown error has occurred. Commonly this refers to connectivity problems.|
+
+## More info
+
+Once you create an order, it lives on our servers for a period of 30 days if not confirmed. For more info in how to manage your pending orders, follow the docs at: https://docs.logistics.shippify.co/orders.html
