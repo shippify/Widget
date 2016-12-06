@@ -27,22 +27,16 @@ npm install
 
 **Sandbox**
 
+Sandbox mode works well for development. Once the development server has started (see steps below), any file in /src can be modified and customized to your specific needs and will cause a process of linting and rendering on your browser.
+
+The approach of hot-module reloading (HMR) allows a fast and safe experience at the moment of coding.
+
 * Uncomment commented lines in src/index.js and fill with e-commerce specific information.
 * Run `npm start` at root directory. (If browser does not open automatically, open http://localhost:3000)
 
 ```bash
 # Inside project directory
 npm start
-```
-
-**Production**
-
-* Run `npm run build` at root directory.
-* Drag assets generated from `/build` directory and add them to your `html` file.
-
-```bash
-# Inside project directory
-npm run build
 ```
 
 ## Getting started
@@ -70,7 +64,11 @@ An order template is an object that represents the order's and its pickup inform
     quantity: 10 // (integer, gte-1)
   ],
   pickupPlace: new window.shippify.places.Address("Rua Curitiba - Lourdes, Belo Horizonte - State of Minas Gerais, Brazil"), // Business or pickup location. (class:Place, object, optional)
-  specialInstructions: "Ring the bell for apartment 2B, ask for Carol." // In-app instructions for your business's location for the courier. (string, optional)
+  specialInstructions: "Ring the bell for apartment 2B, ask for Carol.", // In-app instructions for your business's location for the courier. (string, optional)
+  fixedPrice: { // Set a fixed shipping price (object, optional)
+    value: 3.14, // (float, gte-1),
+    currencyCode: "USD" // (iso4217, string)
+  }
 }
 ```
 
@@ -101,20 +99,48 @@ The `Widget` class is responsible for creating the UI for creating an order base
 const widget = new window.shippify.integrations.Widget(orderManager, document.getElementById("my-shippify-widget"))
 ```
 
-**Listening for order confirmation:**
+**Confirming an order:**
 
-Add an event listener to get the order information at the moment of checkout like this:
+Once the client click your checkout button, call `widget.generateOrder`. This method will parse the fields and if everything is correct will create an order in the Shippify platform.
 
 ```javascript
-widget.addListener((error, order) => {
+widget.generateOrder((error, order) => {
   console.log(error)
   console.log(order)
 })
 ```
 
-**Destroy the widget**
+An order, if the request is successful, will return with the following schema:
+
+```javascript
+{
+  order: { // (object)
+    id: "321", // (string)
+    href: "https://api.shippify.co/orders/321" // Url to get the created order details. (string)
+  }
+}
+```
+
+**Destroying the widget**
 
 For deiniting the widget once the confirmation is successful only call `widget.destroy()`.
+
+## Deploying
+
+**Production**
+
+When you have finished customizing the widget for your needs or the default implementation is good enough for you, it's time to generate a production build. Through a series of scripts, we create an optimized and minified build of /src contents that define the widget behavior and appearance.
+
+To create this bundle:
+
+* Run `npm run build` at root directory.
+* Drag assets generated from `/build` directory and add them to your server's public folder.
+* Add the necessary tags in you `html` file.
+
+```bash
+# Inside project directory
+npm run build
+```
 
 ## Platforms
 
@@ -125,3 +151,18 @@ window.shippify.integrations.platforms = {
   VTEX, JUMPSELLER
 }
 ```
+
+## Errors
+
+All constructors and actions made by the classes: `Place`, `OrderManager`, `Widget` can throw errors if the input information is missing or invalid. Shippify has streamlined errors with information about the reason of the failure and how to correct them.
+
+These errors have `code`, `message` properties to identify the error and its description. In many cases, the errors will also have a `meta` property if more info is necessary.
+
+### Types
+
+|Code|Description|
+|----|-----------|
+|`invalid_value`|An input parameter was missing or invalid. Please check the documentation for the proper values.|
+|`geocoding_failure`|Shippify uses Google Maps API to geocode addresses and coordinates provided. If specifying a warehouse id from Shippify provokes this error, then such id is invalid.|
+|`unauthenticated`|The Shippify API credentials provided are missing, or incorrect.|
+|`unknown_error`|An unknown error has occurred. Commonly this refers to connectivity problems.|
