@@ -14,7 +14,8 @@ To test it just copy this snippet into an `html` file.
 ```html
 <html>
   <head>
-    <script type="text/javascript" src="https://cdn.shippify.co/widget/1.0.0/index.min.js"></script>
+    <script type="text/javascript" src="https://cdn.shippify.co/widget/1.0.0/main.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
   </head>
   <body>
     <div id="my-shippify-widget"></div>
@@ -41,8 +42,8 @@ To test it just copy this snippet into an `html` file.
       }
       const orderManager = new shippify.integrations.OrderManager(orderTemplate, orderManagerOptions)
 
-     const shippifyWidgetContainer = document.getElementById('my-shippify-widget')
-     const widget = new shippify.integrations.Widget(orderManager, shippifyWidgetContainer)
+      const shippifyWidgetContainer = document.getElementById('my-shippify-widget')
+      const widget = new shippify.integrations.Widget(orderManager, shippifyWidgetContainer)
     </script>
   </body>
 </html>

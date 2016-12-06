@@ -49,15 +49,6 @@ class Widget {
     const marker = new google.maps.Marker({ map, draggable: true })
     const geocoder = new google.maps.Geocoder()
 
-    // const isOrderValid = order => {
-    //   console.log(order)
-    //   if (!order.contact.name) return false
-    //   if (!order.contact.phone) return false
-    //   if (!order.location) return false
-    //   if (!order.priceText) return false
-    //   return true
-    // }
-
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
         const position = { lat: latitude, lng: longitude }
@@ -175,6 +166,7 @@ class Widget {
       this.order.vehicleType = !isSelected ? event.target.getAttribute('data-vehicle-type') : undefined
     })
     this.onContactNameChangeListener = contactNameInput.addEventListener('keyup', event => {
+      if (event.keyCode == '9') return
       this.order.contact.name = event.target.value ? event.target.value : undefined
       if (event.target.value) {
         contactNameErrorPrompt.classList.add('shpy__message_tooltip--hidden')
@@ -183,9 +175,12 @@ class Widget {
       }
     })
     if (contactEmailInput) {
+      const emailRegex = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/
       this.onContactEmailChangeListener = contactEmailInput.addEventListener('keyup', event => {
-        this.order.contact.email = event.target.value ? event.target.value : undefined
-        if (event.target.value) {
+        if (event.keyCode == '9') return
+        const email = event.target.value
+        this.order.contact.email = email ? email : undefined
+        if (emailRegex.test(email)) {
           contactEmailErrorPrompt.classList.add('shpy__message_tooltip--hidden')
         } else {
           contactEmailErrorPrompt.classList.remove('shpy__message_tooltip--hidden')
@@ -193,6 +188,7 @@ class Widget {
       })
     }
     this.onContactPhoneChangeListener = contactPhoneInput.addEventListener('keyup', event => {
+      if (event.keyCode == '9') return
       this.order.contact.phone = event.target.value ? event.target.value : undefined
       if (event.target.value) {
         contactPhoneErrorPrompt.classList.add('shpy__message_tooltip--hidden')

@@ -103,7 +103,8 @@ class OrderManager {
 
     if (typeof phone !== 'string' || !phone) return cb(generateError(errors.invalidValue('order.contact.phone', phone)))
 
-    if (typeof email !== 'undefined' && (typeof email !== 'string' || !email)) return cb(generateError(errors.invalidValue('order.contact.email', email)))
+    const emailRegex = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/
+    if (typeof email !== 'undefined' && (typeof email !== 'string' || !email || !emailRegex.test(email))) return cb(generateError(errors.invalidValue('order.contact.email', email)))
 
     if (typeof vehicleType !== 'undefined' && Object.keys(vehicleTypes).map(key => vehicleTypes[key]).indexOf(vehicleType) === -1) return cb(generateError(errors.invalidValue('options.vehicleType', vehicleType)))
 
