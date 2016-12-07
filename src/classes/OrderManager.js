@@ -131,7 +131,7 @@ class OrderManager {
           location: pickupLocation,
           specialInstructions: pickupInstructions,
         },
-        delivery: {
+        dropoff: {
           location: deliveryLocation,
           contact,
           specialInstructions,
