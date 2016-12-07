@@ -1,15 +1,15 @@
 # Shippify UI Widget
 
-Shippify UI Widget for companies and plaforms - a toolkit for implementing Shippify's Last Mile Delivery API on the web through a friendly UI. It is designed to enable e-commerces of any size to quickly create, and dispatch orders, at checkout, to Shippify and confirm them for delivery the moment it is needed. It also makes it easy to customize the style files that render the widget and adjust them to e-commerces' personal needs.
+Shippify UI Widget for companies and e-commerce platforms - a toolkit for implementing Shippify's Last Mile Delivery API on the web through a friendly UI. It is designed to enable e-commerces of any size to quickly create, and dispatch orders, at checkout, to Shippify and confirm them for delivery the moment it is needed. It also makes it easy to customize the style files that render the widget and adjust them to e-commerces' personal needs.
 
 ## Installation
 You can choose to install the Shippify UI Widget either through a CDN, manually, or through a dependency manager (coming soon).
 
-### CDN
+### Start ASAP
 
 Using Shippify's own CDN is the fastest and easiest way to insert the widget functionality directly to your webpage.
 
-To test it just copy this snippet into an `html` file.
+To test it just copy this snippet into an `html` file. Or you can find a sample HTML in the directory `/sample/index..html.temp` of this repo that you can copy and rename it to `index.html` to open it in the browser of your preference.
 
 ```html
 <html>
@@ -20,7 +20,9 @@ To test it just copy this snippet into an `html` file.
   <body>
     <div id="my-shippify-widget"></div>
     <script type="text/javascript">
-      const pickupPlace = new shippify.places.Address('Av. 9 de Octubre, Guayaquil, EC')
+
+      const pickupPlace = new shippify.places.FullLocation("Av. 9 de Octubre, Guayaquil, EC", -2.1148198, -79.8975795)
+
       const orderTemplate = {
         id: 'my-platform-reference-id',
         platform: shippify.integrations.platforms.VTEX,
@@ -28,7 +30,7 @@ To test it just copy this snippet into an `html` file.
         items: [
           { name: 'Dog', size: 3, quantity: 10 }
         ],
-        fixedPrice: {
+        fixedPrice: {// fixed prices are applied depending on the deal with Shippify city manager
           value: 3.14,
           currencyCode: 'USD'
         }
@@ -49,43 +51,10 @@ To test it just copy this snippet into an `html` file.
 </html>
 ```
 
-### Manually
 
-* Clone this repo.
-* Go inside project directory
-* Run `npm install`.
+## Widget Components
 
-```bash
-# Go to directory where project should be cloned
-git clone https://github.com/shippify/Widget.git
-cd Widget
-npm install
-```
-
-## Building
-
-### Requirements to build
-
-* node >= 4
-* npm >= 3
-
-**Sandbox**
-
-Sandbox mode works well for development. Once the development server has started (see steps below), any file in /src can be modified and customized to your specific needs and will cause a process of linting and rendering on your browser.
-
-The approach of hot-module reloading (HMR) allows a fast and safe experience at the moment of coding.
-
-* Uncomment commented lines in src/index.js and fill with e-commerce specific information.
-* Run `npm start` at root directory. (If browser does not open automatically, open http://localhost:3000)
-
-```bash
-# Inside project directory
-npm start
-```
-
-## API
-
-To enable you to quickly get started using the Shippify UI Widget, we've created a simple API to render the widget in your webpage with a few options.
+To enable you to quickly get started using the Shippify UI Widget, we've created a simple library in javascript to render the widget in your webpage with a few options.
 
 The widget is powered by the logic housed in the `OrderManager` class.
 
@@ -166,26 +135,15 @@ An order, if the request is successful, will return with the following schema:
 }
 ```
 
+## About managing orders
+
+Once you create an order, it lives on our servers for a period of 30 days if not confirmed. For more info in how to manage your pending orders, follow the docs at: https://docs.logistics.shippify.co/orders.html
+
+
 **Destroying the widget**
 
-For deiniting the widget once the confirmation is successful only call `widget.destroy()`.
+For deleting the widget once the confirmation is successful only call `widget.destroy()`.
 
-## Deploying
-
-**Production**
-
-When you have finished customizing the widget for your needs or the default implementation is good enough for you, it's time to generate a production build. Through a series of scripts, we create an optimized and minified build of /src contents that define the widget behavior and appearance.
-
-To create this bundle:
-
-* Run `npm run build` at root directory.
-* Drag assets generated from `/build` directory and add them to your server's public folder.
-* Add the necessary tags in you `html` file.
-
-```bash
-# Inside project directory
-npm run build
-```
 
 ## Platforms
 
@@ -212,6 +170,59 @@ These errors have `code`, `message` properties to identify the error and its des
 |`unauthenticated`|The Shippify API credentials provided are missing, or incorrect.|
 |`unknown_error`|An unknown error has occurred. Commonly this refers to connectivity problems.|
 
+
+### Contribute and Customize
+
+* Clone this repo.
+* Go inside project directory
+* Run `npm install`.
+
+```bash
+# Go to directory where project should be cloned
+git clone https://github.com/shippify/Widget.git
+cd Widget
+npm install
+```
+
+## Building
+
+### Requirements to build
+
+* node >= 4
+* npm >= 3
+
+**Sandbox**
+
+Sandbox mode works well for development. Once the development server has started (see steps below), any file in /src can be modified and customized to your specific needs and will cause a process of linting and rendering on your browser.
+
+The approach of hot-module reloading (HMR) allows a fast and safe experience at the moment of coding.
+
+* Uncomment commented lines in src/index.js and fill with e-commerce specific information.
+* Run `npm start` at root directory. (If browser does not open automatically, open http://localhost:3000)
+
+```bash
+# Inside project directory
+npm start
+```
+
+## Deploying
+
+**Production**
+
+When you have finished customizing the widget for your needs or the default implementation is good enough for you, it's time to generate a production build. Through a series of scripts, we create an optimized and minified build of /src contents that define the widget behavior and appearance.
+
+To create this bundle:
+
+* Run `npm run build` at root directory.
+* Drag assets generated from `/build` directory and add them to your server's public folder.
+* Add the necessary tags in you `html` file.
+
+```bash
+# Inside project directory
+npm run build
+```
+
+
 ## More info
 
-Once you create an order, it lives on our servers for a period of 30 days if not confirmed. For more info in how to manage your pending orders, follow the docs at: https://docs.logistics.shippify.co/orders.html
+If you need more info about our entities and API follow the docs at: https://docs.logistics.shippify.co
