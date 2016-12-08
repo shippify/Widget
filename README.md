@@ -9,7 +9,7 @@ You can choose to install the Shippify UI Widget either through a CDN, manually,
 
 Using Shippify's own CDN is the fastest and easiest way to insert the widget functionality directly to your webpage.
 
-To test it just copy this snippet into an `html` file. Or you can find a sample HTML in the directory `/sample/index..html.temp` of this repo that you can copy and rename it to `index.html` to open it in the browser of your preference.
+To test it, just copy this snippet into an `html` file or use the sample `html` file at `/sample/index.html.temp` of this repo. Copy and rename it as `index.html` to open it in the browser of your choice.
 
 ```html
 <html>
@@ -28,7 +28,7 @@ To test it just copy this snippet into an `html` file. Or you can find a sample 
         platform: shippify.integrations.platforms.VTEX,
         pickupPlace,
         items: [
-          { name: 'Dog', size: 3, quantity: 10 }
+          { id: 'my-product-id', name: 'Dog', size: 3, quantity: 10 }
         ],
         fixedPrice: {// fixed prices are applied depending on the deal with Shippify city manager
           value: 3.14,
@@ -51,7 +51,6 @@ To test it just copy this snippet into an `html` file. Or you can find a sample 
 </html>
 ```
 
-
 ## Widget Components
 
 To enable you to quickly get started using the Shippify UI Widget, we've created a simple library in javascript to render the widget in your webpage with a few options.
@@ -62,11 +61,12 @@ The widget is powered by the logic housed in the `OrderManager` class.
 
 To initialize a manager there must be a configuration set as:
 
-```javscript
+```javascript
 const orderManager = new shippify.integrations.OrderManager(orderTemplate, options) // DOMNode should be a DOM node container where the widget should be rendered.
 ```
 
 An order template is an object that represents the order's and its pickup information which contains the following keys:
+
 ```javascript
 { // Order template (object)
   id: "my-order-id", // The merchant supplied order id backed in their system. (string, non-empty),
@@ -86,6 +86,7 @@ An order template is an object that represents the order's and its pickup inform
 ```
 
 The OrderManager includes options as permissions and credentials provided by Shippify API and/or external sources.
+
 ```javascript
 { // Options (object)
   credentials: { // Shippify API credentials for your e-commerce. (object)
@@ -113,9 +114,9 @@ The `Widget` class is responsible for creating the UI for creating an order base
 const widget = new shippify.integrations.Widget(orderManager, document.getElementById("my-shippify-widget"))
 ```
 
-**Confirming an order:**
+**Generating an order:**
 
-Once the client click your checkout button, call `widget.generateOrder`. This method will parse the fields and if everything is correct will create an order in the Shippify platform.
+Once the client clicks your checkout button, call `widget.generateOrder`. This method will parse the fields and if everything is correct will create an order in the Shippify platform.
 
 ```javascript
 widget.generateOrder((error, order) => {
@@ -137,13 +138,11 @@ An order, if the request is successful, will return with the following schema:
 
 ## About managing orders
 
-Once you create an order, it lives on our servers for a period of 30 days if not confirmed. For more info in how to manage your pending orders, follow the docs at: https://docs.logistics.shippify.co/orders.html
-
+Once you create an order, it will live on our servers for a period of 30 days if not confirmed. For more info in how to manage your pending orders, follow the docs at: https://docs.logistics.shippify.co/orders.html.
 
 **Destroying the widget**
 
 For deleting the widget once the confirmation is successful only call `widget.destroy()`.
-
 
 ## Platforms
 
@@ -152,6 +151,32 @@ This section is only necessary if your e-commerce is using a sales platform whic
 ```javascript
 shippify.integrations.platforms = {
   VTEX, JUMPSELLER
+}
+```
+
+## Translations
+
+Shippify operates in a large number of countries, therefore localization and internationalization is very important for us. Currently we support en-\*, es-\*, pt-\* locales. If you need to add more languages or messages, the steps to follow are:
+
+### Add localized messages
+
+1. Go inside the translations directory in `src/translations/`.
+2. In `messages.js`, define a message key that will be used to identify the message through different locales.
+3. In each of the locale files (e.g. `en.js`), add your message key with the text that should be displayed in said locale as value.
+4. To reference it in the html, go to src/widget.ejs and write as `<%= messages[messageIds.NEW_MESSAGE_ID] %>`.
+
+### Add new language
+
+1. Go inside the translations directory in `src/translations/`.
+2. Create new file with locale language code (e.g. `fr.js`).
+3. Copy and paste one of the existent language files and replace its texts to respective locale.
+4. To enable it, go to src/translations/index.js and add these two lines:
+
+```javascript
+// Assuming french locale (fr.js)
+import { translations as frenchTranslations } from './fr'
+// ...
+  'fr': frenchTranslations,
 }
 ```
 
@@ -170,11 +195,10 @@ These errors have `code`, `message` properties to identify the error and its des
 |`unauthenticated`|The Shippify API credentials provided are missing, or incorrect.|
 |`unknown_error`|An unknown error has occurred. Commonly this refers to connectivity problems.|
 
-
-### Contribute and Customize
+### Contribute and customize
 
 * Clone this repo.
-* Go inside project directory
+* Go inside project directory.
 * Run `npm install`.
 
 ```bash
@@ -222,7 +246,6 @@ To create this bundle:
 npm run build
 ```
 
-
 ## More info
 
-If you need more info about our entities and API follow the docs at: https://docs.logistics.shippify.co
+If you need more info about our entities and API follow the docs at: https://docs.logistics.shippify.co.
