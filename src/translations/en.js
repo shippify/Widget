@@ -12,4 +12,5 @@ export const translations = {
   [messageIds.INVALID_CLIENT_PHONE_PROMPT]: 'Field must be a valid phone number.',
   [messageIds.VEHICLE_TYPES_LABEL]: 'Pick a ride for your package',
   [messageIds.ORDER_BUTTON_TITLE]: 'Order',
+  [messageIds.DELIVERY_TIME_WINDOW_TITLE]: 'Deliver between',
 }

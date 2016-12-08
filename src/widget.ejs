@@ -30,6 +30,12 @@
         <div class="shpy__form__icon shpy__form__instructions-icon"></div>
         <input id="shpy-delivery-special_instructions-input" class="shpy__form__input" type="text" placeholder="<%= messages[messageIds.SPECIAL_INSTRUCTIONS_PLACEHOLDER] %>"/>
       </div>
+      <div class="shpy__form__field">
+        <div class="shpy__form__deliveryTime-icon"> <img src="https://cdn.shippify.co/widget/delivery_time.svg"/></div>
+        <select id="shpy__form__select_deliveryTime" class="shpy__form__select_deliveryTime">
+          <option value="" disabled selected><%= messages[messageIds.DELIVERY_TIME_WINDOW_TITLE] %></option>
+        </select>
+      </div>
     </div>
     <span style="justify-content:center;display: flex;; font-family: Roboto; color: #757575"><%= messages[messageIds.VEHICLE_TYPES_LABEL] %></span>
     <div class="shpy__vehicle-bar">
@@ -39,4 +45,5 @@
       <button id="shpy-van-button" class="shpy__vehicle-bar__option shpy__vehicle-bar__van-option" data-vehicle-type="van"></button>
       <button id="shpy-truck-button" class="shpy__vehicle-bar__option shpy__vehicle-bar__truck-option" data-vehicle-type="truck"></button>
     </div>
+
 </div>

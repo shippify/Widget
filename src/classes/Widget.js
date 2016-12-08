@@ -117,6 +117,37 @@ class Widget {
     this.searchBox = searchBox
     this.marker = marker
 
+    const fillSelect = () => {
+      var minHourSameDay = 15;
+      var maxHourDay = 20;
+      var minHourNextDay = 8;
+      var sel = document.getElementById('shpy__form__select_deliveryTime');
+      var ActualTime = new Date();
+      var getHour = ActualTime.getHours();
+      var initialHour = 0;
+
+      if (getHour < minHourSameDay){
+        initialHour = getHour + 3;
+        for (var i = initialHour; initialHour < maxHourDay;initialHour+=2){
+          var optionDeliveryTime = document.createElement('option');
+          optionDeliveryTime.innerHTML = initialHour +":00 - " + (initialHour+2)+ ":00";
+          optionDeliveryTime.value = initialHour;
+          sel.appendChild(optionDeliveryTime);
+        }
+      }
+      else {
+        initialHour = minHourNextDay;
+        for (var i = initialHour; initialHour < maxHourDay;initialHour+=2){
+          var optionDeliveryTime = document.createElement('option');
+          optionDeliveryTime.innerHTML = initialHour +":00 - " + (initialHour+2)+ ":00";
+          optionDeliveryTime.value = initialHour;
+          sel.appendChild(optionDeliveryTime);
+        }
+      }
+    }
+
+    fillSelect()
+
     const deselectVehicleButtons = () => {
       bikeButton.classList.remove('shpy__vehicle-bar__option--selected')
       motoButton.classList.remove('shpy__vehicle-bar__option--selected')
@@ -246,6 +277,8 @@ class Widget {
 
     // this.orderManager = null
   }
+
+
 }
 
 export default Widget

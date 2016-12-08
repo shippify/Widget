@@ -47,6 +47,15 @@
 .shpy__form__instructions-icon {
   mask-image: url(https://cdn.shippify.co/widget/info-outline.svg);
 }
+.shpy__form__deliveryTime-icon img {
+  margin: 0px 14px;
+  width: 24px;
+  height: 20px;
+}
+.shpy__form__select_deliveryTime{
+  width: 100%;
+}
+
 
 .shpy__form__input {
   background-color: #f7f7f7;

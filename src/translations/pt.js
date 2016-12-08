@@ -12,4 +12,5 @@ export const translations = {
   [messageIds.INVALID_CLIENT_PHONE_PROMPT]: 'Deve ser um número de telefone válido.',
   [messageIds.VEHICLE_TYPES_LABEL]: 'Escolha um veículo para o seu pacote',
   [messageIds.ORDER_BUTTON_TITLE]: 'Encomende',
+  [messageIds.DELIVERY_TIME_WINDOW_TITLE]: 'Entregar entre:',
 }
