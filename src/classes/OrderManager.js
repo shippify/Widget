@@ -95,7 +95,7 @@ class OrderManager {
     })
   }
 
-  generateOrder({ contact, location: deliveryLocation, vehicleType, specialInstructions }, cb) {
+  generateOrder({ contact, location: deliveryLocation, date: deliveryDate, vehicleType, specialInstructions }, cb) {
     if (typeof contact !== 'object' || contact === null) return cb(generateError(errors.invalidValue('order.contact', contact)))
 
     const { name, email, phone } = contact
@@ -119,6 +119,8 @@ class OrderManager {
 
     if (typeof longitude !== 'number' || longitude < -180 || longitude > 180) return cb(generateError(errors.invalidValue('order.location.longitude', longitude)))
 
+    if (!(deliveryDate instanceof Date)) return cb(generateError(errors.invalidValue('order.date', deliveryDate)))
+
     const { apiToken, id, platform, items, fixedPrice, pickupPlace, specialInstructions: pickupInstructions, googleMapsAPIKey } = this
     pickupPlace.getLocation({ googleMapsAPIKey, apiToken }, (error, pickupLocation) => {
       if (error) return cb(error)
@@ -133,6 +135,7 @@ class OrderManager {
         },
         dropoff: {
           location: deliveryLocation,
+          date: deliveryDate,
           contact,
           specialInstructions,
         },
