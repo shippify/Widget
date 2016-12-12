@@ -4,7 +4,7 @@ import translations, { messageIds } from './../translations'
 import widgetTemplate from './../widget.ejs'
 
 class Widget {
-  constructor(orderManager, node, { excludedFields = [] } = {}) {
+  constructor(orderManager, node, { excludedFields = [], preferredLanguage } = {}) {
     if (!(orderManager instanceof OrderManager)) {
       throw generateError(errors.invalidValue('orderManager', orderManager))
     }
@@ -14,14 +14,17 @@ class Widget {
     if (!Array.isArray(excludedFields)) {
       throw generateError(errors.invalidValue('options.excludedFields', excludedFields))
     }
+    if (typeof preferredLanguage !== 'undefined' && typeof preferredLanguage !== 'string') {
+      throw generateError(errors.invalidValue('options.preferredLanguage', preferredLanguage))
+    }
     this.orderManager = orderManager
     this.node = node
     this.order = {
       contact: {}
     }
-    const preferredLanguage = (navigator.languages && navigator.languages[0]) || navigator.language || navigator.userLanguage
-    const preferredLanguageTwoLetterCode = preferredLanguage.includes('-') ? preferredLanguage.split('-')[0] : preferredLanguage
-    const language = Object.keys(translations).indexOf(preferredLanguageTwoLetterCode) !== -1 ? preferredLanguageTwoLetterCode : 'en'
+    const navigatorLanguage = preferredLanguage || (navigator.languages && navigator.languages[0]) || navigator.language || navigator.userLanguage
+    const languageTwoLetterCode = navigatorLanguage.includes('-') ? navigatorLanguage.split('-')[0] : navigatorLanguage
+    const language = Object.keys(translations).indexOf(languageTwoLetterCode) !== -1 ? languageTwoLetterCode : 'en'
     this.node.innerHTML = widgetTemplate({ excludedFields, messageIds, messages: translations[language] })
 
     const { document, google } = window
