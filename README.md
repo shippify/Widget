@@ -45,7 +45,9 @@ To test it, just copy this snippet into an `html` file or use the sample `html` 
       const orderManager = new shippify.integrations.OrderManager(orderTemplate, orderManagerOptions)
 
       const shippifyWidgetContainer = document.getElementById('my-shippify-widget')
-      const widget = new shippify.integrations.Widget(orderManager, shippifyWidgetContainer)
+      const widget = new shippify.integrations.Widget(orderManager, shippifyWidgetContainer, {
+        preferredLanguage: 'es'
+      })
     </script>
   </body>
 </html>
