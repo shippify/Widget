@@ -42,8 +42,11 @@ const orderManagerOptions = {
    apiSecret: 'my-shippify-api-secret'
   },
   // googleMapsAPIKey: 'my-google-maps-api-key'
+
 }
 const orderManager = new shippify.integrations.OrderManager(orderTemplate, orderManagerOptions)
 
 const shippifyWidgetContainer = document.getElementById('root')
-const widget = new shippify.integrations.Widget(orderManager, shippifyWidgetContainer)
+const widget = new shippify.integrations.Widget(orderManager, shippifyWidgetContainer, {
+  // preferredLanguage: 'es'
+})
