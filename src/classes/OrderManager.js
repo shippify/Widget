@@ -3,7 +3,7 @@ import { platforms, vehicleTypes } from './../constants'
 import errors, { generateError } from './../errors'
 
 class OrderManager {
-  constructor({ id, platform, pickupPlace, items, fixedPrice, specialInstructions }, { credentials: { apiId, apiSecret }, googleMapsAPIKey }) {
+  constructor({ id, platform, pickupPlace, items, fixedPrice, specialInstructions, deliveryTime }, { credentials: { apiId, apiSecret }, googleMapsAPIKey }) {
     if (typeof apiId !== 'string' || !apiId || typeof apiSecret !== 'string' || !apiSecret) {
       throw generateError(errors.invalidValue('options.credentials', { apiId, apiSecret }))
     }
@@ -37,12 +37,17 @@ class OrderManager {
     if (typeof googleMapsAPIKey !== 'undefined' && (typeof googleMapsAPIKey !== 'string' || !googleMapsAPIKey)) {
       throw generateError(errors.invalidValue('options.googleMapsAPIKey', googleMapsAPIKey))
     }
+    if (typeof deliveryTime !== 'undefined' && (typeof deliveryTime !== 'string' || !deliveryTime)) {
+      throw generateError(errors.invalidValue('order.deliveryTime', deliveryTime))
+    }
+
     this.apiToken = btoa(`${apiId}:${apiSecret}`)
     this.id = id
     this.platform = platform
     this.items = items
     this.pickupPlace = pickupPlace || { getLocation: (options, cb) => cb(null) }
     this.specialInstructions = specialInstructions
+    this.deliveryTime = deliveryTime
     this.googleMapsAPIKey = googleMapsAPIKey
     this.fixedPrice = fixedPrice
   }
@@ -95,7 +100,7 @@ class OrderManager {
     })
   }
 
-  generateOrder({ contact, location: deliveryLocation, date: deliveryDate, vehicleType, specialInstructions }, cb) {
+  generateOrder({ contact, location: deliveryLocation, date: deliveryDate, vehicleType, specialInstructions, deliveryTime }, cb) {
     if (typeof contact !== 'object' || contact === null) return cb(generateError(errors.invalidValue('order.contact', contact)))
 
     const { name, email, phone } = contact
@@ -109,6 +114,8 @@ class OrderManager {
     if (typeof vehicleType !== 'undefined' && Object.keys(vehicleTypes).map(key => vehicleTypes[key]).indexOf(vehicleType) === -1) return cb(generateError(errors.invalidValue('options.vehicleType', vehicleType)))
 
     if (typeof specialInstructions !== 'undefined' && (typeof specialInstructions !== 'string' || !specialInstructions)) return cb(generateError(errors.invalidValue('order.specialInstructions', specialInstructions)))
+
+    if (typeof deliveryTime !== 'undefined' && (typeof deliveryTime !== 'string' || !deliveryTime)) return cb(generateError(errors.invalidValue('order.deliveryTime', deliveryTime)))
 
     if (typeof deliveryLocation !== 'object' || deliveryLocation === null) return cb(generateError(errors.invalidValue('order.location', deliveryLocation)))
 
@@ -138,6 +145,7 @@ class OrderManager {
           date: deliveryDate,
           contact,
           specialInstructions,
+          deliveryTime,
         },
         price: fixedPrice ? fixedPrice.value : undefined
       }

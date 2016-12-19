@@ -40,6 +40,7 @@ class Widget {
     const contactNameErrorPrompt = document.getElementById('shpy-contact-name-error')
     const contactEmailErrorPrompt = document.getElementById('shpy-contact-email-error')
     const contactPhoneErrorPrompt = document.getElementById('shpy-contact-phone-error')
+    const deliveryTimeSelect =document.getElementById('shpy__form__select_deliveryTime')
 
     const map = new google.maps.Map(mapContainer, {
       center: {lat: -34.397, lng: 150.644},
@@ -230,6 +231,10 @@ class Widget {
     this.onSpecialInstructionsChangeListener = specialInstructionsInput.addEventListener('keyup', event => {
       this.order.specialInstructions = event.target.value ? event.target.value : undefined
     })
+    this.onDeliveryTime = deliveryTimeSelect.addEventListener('click', event => {
+      const optionSelected = deliveryTimeSelect.options[deliveryTimeSelect.selectedIndex].value;
+      this.order.deliveryTime = optionSelected ? optionSelected : undefined
+    })
   }
 
   generateOrder(cb) {
@@ -272,6 +277,9 @@ class Widget {
     this.onContactPhoneChangeListener = null
     this.onSpecialInstructionsChangeListener.remove()
     this.onSpecialInstructionsChangeListener = null
+
+    this.onDeliveryTime.remove()
+    this.onDeliveryTime = null
 
     this.node.innerHTML = ''
 
